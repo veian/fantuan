@@ -4,3 +4,5 @@ target
 src/main/webapp/.idea
 .project
 .classpath
+src/main/webapp/dist
+src/main/webapp/node_modules
