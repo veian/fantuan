@@ -1,4 +1,4 @@
-var app = angular.module('AngularJSApp');
+var app = angular.module('Fantuan');
 
 var INTEGER_REGEXP = /^\-?\d*$/;
 app.directive('integer', function() {

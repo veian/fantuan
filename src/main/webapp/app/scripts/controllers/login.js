@@ -1,6 +1,6 @@
 "use strict";
 
-var module = angular.module("AngularJSApp");
+var module = angular.module("Fantuan");
 // Login
 var Controller = function($rootScope, $scope, $location, Authentication) {
 

@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('AngularJSApp');
+var app = angular.module('Fantuan');
 
 app.controller('MainCtrl', function ($scope) {
     $scope.awesomeThings = [
