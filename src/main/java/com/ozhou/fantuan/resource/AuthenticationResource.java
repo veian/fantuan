@@ -24,7 +24,7 @@ public class AuthenticationResource {
   public AuthenticationResponseDto login(LoginDto loginDto) {
     
     String user = loginDto.getUsername();
-    String password = loginDto.getPassword();
+    //String password = loginDto.getPassword();
 
     //boolean validLogin = processEngine.getIdentityService().checkPassword(user, password);
     boolean validLogin = true;
