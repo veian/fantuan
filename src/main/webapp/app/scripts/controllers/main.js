@@ -15,11 +15,11 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
         return;
     }
 
-    $scope.noOfPages = 10;
+    $scope.noOfPages = 1;
     $scope.currentPage = 1;
     $scope.pageSize = 5;
 
-    $scope.meal = {};
+    $scope.meal = { payer : Authentication.current() };
     $scope.enterNewMeal = false;
     var getBalance = function () {
         $http.get('../rest/account/' + Authentication.current()).success(function (data, status, headers, config) {
@@ -42,6 +42,17 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
     $scope.cancelMeal = function() {
         $scope.enterNewMeal = false;
     };
+
+    var getPageCount = function() {
+        $http.get('../rest/meal/user/count',
+            {params: {user: Authentication.current()}})
+            .success(function (data, status, headers, config) {
+                $scope.noOfPages = Math.ceil(data / $scope.pageSize);
+                if ($scope.noOfPages == 0)
+                    $scope.noOfPages = 1;
+            });
+    }
+    getPageCount();
 
     var getRecords = function() {
         $http.get('../rest/meal/user',

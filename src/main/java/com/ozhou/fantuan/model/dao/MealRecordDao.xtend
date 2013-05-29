@@ -39,4 +39,20 @@ class MealRecordDao {
         var List<MealRecord> records = query.getResultList();
         return records;
     }
+    
+    public def Long getMealRecordForUserCount(String user) {
+        var sql = '''
+            SELECT COUNT(*) FROM `MEALRECORD` AS m
+            WHERE m.`PAYER_NAME` = ?
+              OR m.`ID` IN (
+                SELECT ma.`MealRecord_ID` FROM `MEALRECORD_ACCOUNT` AS ma
+                WHERE ma.`participants_NAME` = ?)
+                ORDER BY m.`DATE` DESC
+        ''';
+        var query = entityManager.createNativeQuery(sql);
+        query.setParameter(1, user);
+        query.setParameter(2, user);
+        var Long count = (query.singleResult) as Long;
+        return count;
+    }
 }

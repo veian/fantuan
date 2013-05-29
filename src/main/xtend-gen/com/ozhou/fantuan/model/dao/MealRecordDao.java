@@ -54,4 +54,31 @@ public class MealRecordDao {
     List<MealRecord> records = query.getResultList();
     return records;
   }
+  
+  public Long getMealRecordForUserCount(final String user) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("SELECT COUNT(*) FROM `MEALRECORD` AS m");
+    _builder.newLine();
+    _builder.append("WHERE m.`PAYER_NAME` = ?");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("OR m.`ID` IN (");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("SELECT ma.`MealRecord_ID` FROM `MEALRECORD_ACCOUNT` AS ma");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("WHERE ma.`participants_NAME` = ?)");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("ORDER BY m.`DATE` DESC");
+    _builder.newLine();
+    String sql = _builder.toString();
+    Query query = this.entityManager.createNativeQuery(sql);
+    query.setParameter(1, user);
+    query.setParameter(2, user);
+    Object _singleResult = query.getSingleResult();
+    Long count = ((Long) _singleResult);
+    return count;
+  }
 }
