@@ -3,8 +3,8 @@ package com.ozhou.fantuan.model;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -14,7 +14,7 @@ public class Account {
 
 	@Id
 	private String name;
-	@Basic
+	@Column(precision=10, scale=2)
 	private BigDecimal balance;
 	@OneToMany(mappedBy="account", cascade = {CascadeType.ALL})
 	private List<AccountEntry> entries;

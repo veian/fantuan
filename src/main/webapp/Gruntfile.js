@@ -96,15 +96,16 @@ module.exports = function (grunt) {
     uglify: {
       dist: {
         files: {
-          '<%= yeoman.dist %>/scripts/scripts.js': [
-            '<%= yeoman.dist %>/scripts/scripts.js'
-          ]
+//          '<%= yeoman.dist %>/scripts/output.js': [
+//            '<%= yeoman.dist %>/scripts/thirdparty.js'
+//          ]
         }
       }
     },
     copy: {
       dist: {
-        files: [{
+        files: [
+        {
           expand: true,
           dot: true,
           cwd: '<%= yeoman.app %>',
@@ -113,9 +114,27 @@ module.exports = function (grunt) {
             '*.{ico,txt}',
             '.htaccess',
             'images/{,*/}*.{gif,webp}',
-            'styles/fonts/*'
+            'styles/fonts/*',
+            'template/**'
           ]
-        }]
+        },
+        {
+            expand: true,
+            dot: true,
+            cwd: '<%= yeoman.app %>',
+            src: ['components/font-awesome/font/*'],
+            flatten: true,
+            dest: '<%= yeoman.dist %>/font'
+        }
+        ]
+      }
+    },
+    ngmin: {
+      dist: {
+          expand: true,
+          flatten: true,
+          src: ['<%= yeoman.dist %>/scripts/*'],
+          dest: '<%= yeoman.dist %>/scripts'
       }
     }
   });
@@ -128,7 +147,8 @@ module.exports = function (grunt) {
     'htmlmin',
     'concat',
     'copy',
-    'uglify',
+//    'ngmin',
+//    'uglify',
     'usemin'
   ]);
 

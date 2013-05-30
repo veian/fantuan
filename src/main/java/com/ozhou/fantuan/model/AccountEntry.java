@@ -3,6 +3,7 @@ package com.ozhou.fantuan.model;
 import java.math.BigDecimal;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -24,7 +25,7 @@ public class AccountEntry {
 	
 	@Enumerated(EnumType.STRING)
 	private Type type;
-	@Basic
+	@Column(precision=10, scale=2)
 	private BigDecimal amount;
 	@Basic
 	private String description;
