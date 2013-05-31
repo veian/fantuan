@@ -1,6 +1,7 @@
 package com.ozhou.fantuan.model;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -40,21 +41,22 @@ public class Account {
 		this.entries = entries;
 	}
 	
-	public void debit(BigDecimal amount, String description) {
-		createAccountEntry(AccountEntry.Type.DEBIT, amount, description);
+	public void debit(Date date, BigDecimal amount, String description) {
+		createAccountEntry(AccountEntry.Type.DEBIT, date, amount, description);
 		balance = balance.add(amount);
 	}
 	
-	public void credit(BigDecimal amount, String description) {
-		createAccountEntry(AccountEntry.Type.CREDIT, amount, description);
+	public void credit(Date date, BigDecimal amount, String description) {
+		createAccountEntry(AccountEntry.Type.CREDIT, date, amount, description);
 		balance = balance.subtract(amount);
 	}
 	
-	private void createAccountEntry(AccountEntry.Type type, BigDecimal amount, String description) {
+	private void createAccountEntry(AccountEntry.Type type, Date date, BigDecimal amount, String description) {
 		AccountEntry entry = new AccountEntry();
 		entry.setType(type);
 		entry.setAmount(amount);
 		entry.setDescription(description);
+		entry.setDate(date);
 		
 		getEntries().add(entry);
 		entry.setAccount(this);

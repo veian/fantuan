@@ -12,11 +12,11 @@ import com.ozhou.fantuan.model.MealRecord;
 public class AccountService {
 	
 	public void splitMealRecord(MealRecord mealRecord) {
-		mealRecord.getPayer().debit(mealRecord.getAmount(), null);
+		mealRecord.getPayer().debit(mealRecord.getDate(), mealRecord.getAmount(), null);
 		BigDecimal avgCost = mealRecord.getAmount().divide(
 				new BigDecimal(mealRecord.getParticipants().size()), 2, RoundingMode.HALF_UP);
 		for (Account account : mealRecord.getParticipants()) {
-			account.credit(avgCost, null);
+			account.credit(mealRecord.getDate(), avgCost, null);
 		}
 	}
 }

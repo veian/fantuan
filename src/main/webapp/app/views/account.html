@@ -1,0 +1,19 @@
+<h1>我的帐户</h1>
+
+<table class="table" style="width: 500px">
+  <thead>
+  <tr>
+    <th>类型</th>
+    <th>金额</th>
+    <th>日期</th>
+  </tr>
+  </thead>
+  <tbody ng-repeat="entry in entries">
+  <tr>
+    <td>{{entry.type}}</td>
+    <td>{{entry.amount}}</td>
+    <td>{{entry.date | date}}</td>
+  </tr>
+  </tbody>
+</table>
+<pagination num-pages="noOfPages" current-page="currentPage" previous-text="前一页" next-text="下一页"></pagination>

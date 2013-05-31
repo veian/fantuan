@@ -10,6 +10,9 @@ app.config(['$routeProvider', function($routeProvider) {
         }).when('/my', {
             controller: 'MyCtrl',
             templateUrl:'views/my.html'
+        }).when('/account', {
+            controller: 'AccountCtrl',
+            templateUrl:'views/account.html'
         }).when('/top', {
             controller: 'TopCtrl',
             templateUrl:'views/top.html'

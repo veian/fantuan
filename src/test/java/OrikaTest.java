@@ -58,5 +58,9 @@ public class OrikaTest {
 		
 		MealRecordDto dto2 = mapperFactory.getMapperFacade().map(mealRecord, MealRecordDto.class);
 		System.out.println(dto2);
+		
+		// Use it as clone
+		MealRecordDto dto3 = mapperFactory.getMapperFacade().map(dto2, MealRecordDto.class);
+		System.out.println(dto3);
 	}
 }

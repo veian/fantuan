@@ -15,6 +15,16 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
         return;
     }
 
+    $scope.restaurantOptions = {
+        data: [{"id":0,"text":"斗香园"},{"id":1,"text":"友加"},{"id":2,"text":"日本料理"},{"id":3,"text":"新旺"}],
+        multiple: false,
+        createSearchChoice: function(term) {
+            var timestamp = new Date().getTime();
+            return {id: timestamp, text: term, new: true};
+        }
+    };
+
+    $scope.restaurantOption = "";
     $scope.noOfPages = 1;
     $scope.currentPage = 1;
     $scope.pageSize = 5;
@@ -30,6 +40,9 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
     };
     $scope.balance = getBalance();
 
+    $scope.$watch("restaurantOption", function(newValue, oldValue) {
+        $scope.meal.restaurant = newValue.text;
+    });
     //Create new meal
     $scope.newMeal = function () {
         if (!$scope.enterNewMeal)
@@ -83,5 +96,34 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
 app.controller('TopCtrl', function ($http, $scope) {
     $http.get('../rest/account').success(function (data, status, headers, config) {
         $scope.users = data;
+    });
+});
+
+
+app.controller('AccountCtrl', function ($scope, $http, Authentication) {
+    $scope.noOfPages = 1;
+    $scope.currentPage = 1;
+    $scope.pageSize = 10;
+
+    var getPageCount = function() {
+        $http.get('../rest/account/' + Authentication.current() + "/entry/count")
+            .success(function (data, status, headers, config) {
+                $scope.noOfPages = Math.ceil(data / $scope.pageSize);
+                if ($scope.noOfPages == 0)
+                    $scope.noOfPages = 1;
+            });
+    }
+    getPageCount();
+
+    var getRecords = function() {
+        $http.get('../rest/account/' + Authentication.current() +"/entry",
+            {params: {start : ($scope.currentPage - 1) * $scope.pageSize, pageSize : $scope.pageSize}})
+            .success(function (data, status, headers, config) {
+                $scope.entries = data;
+            });
+    }
+    getRecords();
+    $scope.$watch("currentPage", function(newValue, oldValue) {
+        getRecords();
     });
 });

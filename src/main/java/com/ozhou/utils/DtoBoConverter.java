@@ -1,5 +1,6 @@
 package com.ozhou.utils;
 
+import ma.glasnost.orika.CustomConverter;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.converter.BidirectionalConverter;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
 import com.ozhou.fantuan.model.Account;
+import com.ozhou.fantuan.model.AccountEntry;
 import com.ozhou.fantuan.model.MealRecord;
 import com.ozhou.fantuan.model.dao.AccountDao;
 import com.ozhou.fantuan.resource.Dto.MealRecordDto;
@@ -49,6 +51,15 @@ public class DtoBoConverter implements InitializingBean {
 			//.field("participants", "participants")
 			.byDefault()
 			.register();
+		
+		mapperFactory.getConverterFactory().registerConverter(new CustomConverter<AccountEntry.Type, String>() {
+			@Override
+			public String convert(
+					com.ozhou.fantuan.model.AccountEntry.Type source,
+					Type<? extends String> destinationType) {
+				return source == AccountEntry.Type.DEBIT ? "充值" : "消费";
+			}		
+		});
 	}
 
 }
