@@ -11,11 +11,10 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
-import com.google.common.collect.Lists;
 import com.ozhou.fantuan.model.Account;
 import com.ozhou.fantuan.model.dao.AccountDao;
 import com.ozhou.fantuan.resource.Dto.AccountDto;
-import com.ozhou.fantuan.resource.converter.DtoBoConverter;
+import com.ozhou.utils.DtoBoConverter;
 
 @Configurable(preConstruction=true)
 @Path("/account")
@@ -31,11 +30,7 @@ public class AccountResource {
 	@Produces({"application/json"})
 	public Response getAccounts() {
 		List<Account> accounts = accountDao.getAll();
-		List<AccountDto> dtos = Lists.newArrayList();
-		for (Account account : accounts) {
-			AccountDto dto = converter.toDto(account);
-			dtos.add(dto);
-		}
+		List<AccountDto> dtos = converter.getMappingFacade().mapAsList(accounts, AccountDto.class);
 		return Response.status(200).entity(dtos).build();
 	}
 	
@@ -47,7 +42,7 @@ public class AccountResource {
 		if (account == null)
 			return Response.status(404).build();
 		
-		AccountDto dto = converter.toDto(account);
+		AccountDto dto = converter.getMappingFacade().map(account, AccountDto.class);
 		return Response.status(200).entity(dto).build();
 	}
 }

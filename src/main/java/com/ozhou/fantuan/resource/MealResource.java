@@ -13,12 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Lists;
 import com.ozhou.fantuan.model.MealRecord;
 import com.ozhou.fantuan.model.dao.MealRecordDao;
 import com.ozhou.fantuan.resource.Dto.MealRecordDto;
-import com.ozhou.fantuan.resource.converter.DtoBoConverter;
 import com.ozhou.fantuan.service.AccountService;
+import com.ozhou.utils.DtoBoConverter;
  
 @Configurable(preConstruction=true)
 @Path("/meal")
@@ -39,9 +38,7 @@ public class MealResource {
 	public Response getMealRecordForUser(@QueryParam("user") String user, 
 			@QueryParam("start") int start, @QueryParam("pageSize") int pageSize) {
 		List<MealRecord> mealRecords = mealRecordDao.getMealRecordForUser(user, start, pageSize);
-		List<MealRecordDto> records = Lists.newArrayList();
-		for (MealRecord mealRecord : mealRecords)
-			records.add(converter.toDto(mealRecord));
+		List<MealRecordDto> records = converter.getMappingFacade().mapAsList(mealRecords, MealRecordDto.class);
 		return Response.status(200).entity(records).build();
 	}
 	
@@ -50,7 +47,7 @@ public class MealResource {
 	@Produces({"application/json"})
 	@Transactional
 	public Response putMealRecord(MealRecordDto record) {
-		MealRecord mealRecord = converter.toBo(record);
+		MealRecord mealRecord = converter.getMappingFacade().map(record, MealRecord.class);
 		accountService.splitMealRecord(mealRecord);
 		mealRecordDao.save(mealRecord);
 		return Response.status(200).build();

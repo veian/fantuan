@@ -18,9 +18,11 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
     $scope.noOfPages = 1;
     $scope.currentPage = 1;
     $scope.pageSize = 5;
-
+    $scope.submitting = false;
     $scope.meal = { payer : Authentication.current() };
     $scope.enterNewMeal = false;
+
+    //Fetch balance
     var getBalance = function () {
         $http.get('../rest/account/' + Authentication.current()).success(function (data, status, headers, config) {
             $scope.balance = data.balance;
@@ -28,14 +30,20 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
     };
     $scope.balance = getBalance();
 
+    //Create new meal
     $scope.newMeal = function () {
         if (!$scope.enterNewMeal)
             $scope.enterNewMeal = true;
         else {
+            $scope.submitting = true;
             $http.post('../rest/meal', $scope.meal).success(function (data, status, headers, config) {
                 getRecords();
                 $scope.enterNewMeal = false;
                 $scope.balance = getBalance();
+
+                $scope.submitting = false;
+            }).error(function(data, status, headers, config) {
+                $scope.submitting = false;
             });
         }
     }
@@ -43,6 +51,7 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
         $scope.enterNewMeal = false;
     };
 
+    // Fetch record by user
     var getPageCount = function() {
         $http.get('../rest/meal/user/count',
             {params: {user: Authentication.current()}})

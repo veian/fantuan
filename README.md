@@ -21,6 +21,7 @@
 * Spring
 * JAX-RS - Resteasy
 * JPA - EclipseLink
+* Orika - DTO/BO Mapping Library
 
 ####说明
 大部分代码用Java编写，小部分代码用Xtend编写

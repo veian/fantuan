@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.google.common.collect.Lists;
+
 @Entity
 public class Account {
 
@@ -17,7 +19,7 @@ public class Account {
 	@Column(precision=10, scale=2)
 	private BigDecimal balance;
 	@OneToMany(mappedBy="account", cascade = {CascadeType.ALL})
-	private List<AccountEntry> entries;
+	private List<AccountEntry> entries = Lists.newArrayList();
 	
 	public String getName() {
 		return name;

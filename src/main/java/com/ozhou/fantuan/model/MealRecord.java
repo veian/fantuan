@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.google.common.collect.Lists;
+
 @Entity
 public class MealRecord {
 	
@@ -30,7 +32,7 @@ public class MealRecord {
 	@ManyToOne
 	private Account payer;
 	@ManyToMany
-	private List<Account> participants;
+	private List<Account> participants = Lists.newArrayList();
 
 	public BigDecimal getAmount() {
 		return amount;
