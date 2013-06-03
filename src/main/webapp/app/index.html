@@ -37,15 +37,14 @@
     <!--page start-->
     <div class="navbar navbar-inverse navbar-fixed-top" bs-navbar>
       <div class="navbar-inner">
-        <a class="brand" href="#">饭团</a>
+        <a class="brand" href="#" style="margin-left: 0px;">饭团</a>
         <ul class="nav">
-          <li data-match-route="/"><a href="#">首页</a></li>
           <li data-match-route="/my"><a href="./#/my">我的饭局</a></li>
           <li data-match-route="/account"><a href="./#/account">我的帐户</a></li>
           <li data-match-route="/top"><a href="./#/top">排行榜</a></li>
         </ul>
 
-        <div class="btn-group pull-right" ng-controller="LogoutController" ng-show="loginUser != null">
+        <div class="btn-group pull-right" style="margin-right: 0px" ng-controller="LogoutController" ng-show="loginUser != null">
           <a class="btn btn-user dropdown-toggle" data-toggle="dropdown" href="#">
             <i class="icon-user"></i> {{ loginUser }}
             <span class="caret"></span>

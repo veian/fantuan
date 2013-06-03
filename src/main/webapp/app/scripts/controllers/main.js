@@ -2,13 +2,6 @@
 
 var app = angular.module('Fantuan');
 
-app.controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      '我的饭团',
-      '各类排行榜'
-    ];
-  });
-
 app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
     if (Authentication.current() == null) {
         $location.path("/login");
@@ -27,7 +20,7 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
     $scope.restaurantOption = "";
     $scope.noOfPages = 1;
     $scope.currentPage = 1;
-    $scope.pageSize = 5;
+    $scope.pageSize = 10;
     $scope.submitting = false;
     $scope.meal = { payer : Authentication.current() };
     $scope.enterNewMeal = false;

@@ -4,10 +4,7 @@ var app = angular.module('Fantuan', ['$strap.directives', 'ui', 'ngCookies', 'ui
 
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
-        when('/', {
-            controller: 'MainCtrl',
-            templateUrl:'views/main.html'
-        }).when('/my', {
+       when('/my', {
             controller: 'MyCtrl',
             templateUrl:'views/my.html'
         }).when('/account', {
@@ -16,5 +13,5 @@ app.config(['$routeProvider', function($routeProvider) {
         }).when('/top', {
             controller: 'TopCtrl',
             templateUrl:'views/top.html'
-        }).otherwise({redirectTo:'/'});
+        }).otherwise({redirectTo:'/my'});
 }]);
