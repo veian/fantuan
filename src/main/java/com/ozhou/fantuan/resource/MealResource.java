@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ozhou.fantuan.model.MealRecord;
 import com.ozhou.fantuan.model.dao.MealRecordDao;
-import com.ozhou.fantuan.resource.Dto.MealRecordDto;
+import com.ozhou.fantuan.resource.dto.MealRecordDto;
 import com.ozhou.fantuan.service.AccountService;
 import com.ozhou.utils.DtoBoConverter;
  

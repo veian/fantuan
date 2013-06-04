@@ -10,8 +10,8 @@ import com.ozhou.fantuan.model.Account;
 import com.ozhou.fantuan.model.AccountEntry;
 import com.ozhou.fantuan.model.MealRecord;
 import com.ozhou.fantuan.model.dao.AccountDao;
-import com.ozhou.fantuan.resource.Dto.AccountDto;
-import com.ozhou.fantuan.resource.Dto.MealRecordDto;
+import com.ozhou.fantuan.resource.dto.AccountDto;
+import com.ozhou.fantuan.resource.dto.MealRecordDto;
 
 
 public class OrikaTest {

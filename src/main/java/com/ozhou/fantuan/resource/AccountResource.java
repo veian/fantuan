@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Configurable;
 import com.ozhou.fantuan.model.Account;
 import com.ozhou.fantuan.model.AccountEntry;
 import com.ozhou.fantuan.model.dao.AccountDao;
-import com.ozhou.fantuan.resource.Dto.AccountDto;
-import com.ozhou.fantuan.resource.Dto.AccountEntryDto;
+import com.ozhou.fantuan.resource.dto.AccountDto;
+import com.ozhou.fantuan.resource.dto.AccountEntryDto;
 import com.ozhou.utils.DtoBoConverter;
 
 @Configurable(preConstruction=true)

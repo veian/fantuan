@@ -8,8 +8,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import com.ozhou.fantuan.resource.Dto.AuthenticationResponseDto;
-import com.ozhou.fantuan.resource.Dto.LoginDto;
+import com.ozhou.fantuan.resource.dto.AuthenticationResponseDto;
+import com.ozhou.fantuan.resource.dto.LoginDto;
 import com.ozhou.filter.AuthenticationFilter;
 
 @Path("/auth")

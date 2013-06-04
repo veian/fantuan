@@ -14,7 +14,7 @@ import com.ozhou.fantuan.model.Account;
 import com.ozhou.fantuan.model.AccountEntry;
 import com.ozhou.fantuan.model.MealRecord;
 import com.ozhou.fantuan.model.dao.AccountDao;
-import com.ozhou.fantuan.resource.Dto.MealRecordDto;
+import com.ozhou.fantuan.resource.dto.MealRecordDto;
 import com.ozhou.utils.SpringContextUtils;
 
 @Component

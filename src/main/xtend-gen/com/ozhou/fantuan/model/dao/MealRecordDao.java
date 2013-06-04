@@ -36,7 +36,6 @@ public class MealRecordDao {
     _builder.append("    ");
     _builder.append("WHERE ma.`participants_NAME` = ?)");
     _builder.newLine();
-    _builder.append("    ");
     _builder.append("ORDER BY m.`DATE` DESC");
     _builder.newLine();
     String sql = _builder.toString();
@@ -70,7 +69,6 @@ public class MealRecordDao {
     _builder.append("    ");
     _builder.append("WHERE ma.`participants_NAME` = ?)");
     _builder.newLine();
-    _builder.append("    ");
     _builder.append("ORDER BY m.`DATE` DESC");
     _builder.newLine();
     String sql = _builder.toString();

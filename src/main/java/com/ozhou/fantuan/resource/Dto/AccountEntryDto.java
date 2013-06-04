@@ -1,4 +1,4 @@
-package com.ozhou.fantuan.resource.Dto;
+package com.ozhou.fantuan.resource.dto;
 
 import java.math.BigDecimal;
 import java.util.Date;

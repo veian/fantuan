@@ -1,4 +1,4 @@
-package com.ozhou.fantuan.resource.Dto;
+package com.ozhou.fantuan.resource.dto;
 
 public class AuthenticationResponseDto {
 	boolean success;
