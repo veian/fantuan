@@ -34,7 +34,8 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
     $scope.balance = getBalance();
 
     $scope.$watch("restaurantOption", function(newValue, oldValue) {
-        $scope.meal.restaurant = newValue.text;
+        if (newValue != null)
+            $scope.meal.restaurant = newValue.text;
     });
     //Create new meal
     $scope.newMeal = function () {
@@ -89,7 +90,29 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
 app.controller('TopCtrl', function ($http, $scope) {
     $http.get('../rest/account').success(function (data, status, headers, config) {
         $scope.users = data;
+
+        var chart_data = {
+            negative : {
+                negative : true,
+                terms : []
+            },
+            positive : {
+                negative : false,
+                terms : []
+            }
+        };
+
+        var negativeAccount = _.filter(data, function(item) { return item.balance < 0});
+        var terms = _.map(negativeAccount, function(item) { return {term : item.name, count : item.balance * -1}});
+        chart_data.negative.terms = terms;
+
+        var positiveAccount = _.filter(data, function(item) { return item.balance >= 0});
+        var postiveTerms = _.map(positiveAccount, function(item) { return {term : item.name, count : item.balance}});
+        chart_data.positive.terms = postiveTerms;
+
+        $scope.chart_data = chart_data;
     });
+
 });
 
 
