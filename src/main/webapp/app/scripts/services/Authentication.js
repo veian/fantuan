@@ -23,7 +23,7 @@ Authentication.prototype.set = function(current) {
 
 Authentication.prototype.login = function(username, password) {
   var self = this,
-      promise = $http.post("../rest/auth/login", { username: username, password: password });
+      promise = $http.post("../api/auth/login", { username: username, password: password });
 
   return promise.then(function(response) {
     var data = response.data;
@@ -38,7 +38,7 @@ Authentication.prototype.login = function(username, password) {
 
 Authentication.prototype.logout = function() {
   var self = this,
-      promise = $http.get("../rest/auth/logout");
+      promise = $http.get("../api/auth/logout");
 
   return promise.then(function() {
     self.set(null);

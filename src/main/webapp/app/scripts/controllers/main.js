@@ -27,7 +27,7 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
 
     //Fetch balance
     var getBalance = function () {
-        $http.get('../rest/account/' + Authentication.current()).success(function (data, status, headers, config) {
+        $http.get('../api/accounts/' + Authentication.current()).success(function (data, status, headers, config) {
             $scope.balance = data.balance;
         });
     };
@@ -43,7 +43,7 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
             $scope.enterNewMeal = true;
         else {
             $scope.submitting = true;
-            $http.post('../rest/meal', $scope.meal).success(function (data, status, headers, config) {
+            $http.post('../api/meals', $scope.meal).success(function (data, status, headers, config) {
                 getRecords();
                 $scope.enterNewMeal = false;
                 $scope.balance = getBalance();
@@ -60,7 +60,7 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
 
     // Fetch record by user
     var getPageCount = function() {
-        $http.get('../rest/meal/user/count',
+        $http.get('../api/meals/count',
             {params: {user: Authentication.current()}})
             .success(function (data, status, headers, config) {
                 $scope.noOfPages = Math.ceil(data / $scope.pageSize);
@@ -71,7 +71,7 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
     getPageCount();
 
     var getRecords = function() {
-        $http.get('../rest/meal/user',
+        $http.get('../api/meals',
             {params: {user: Authentication.current(), start : ($scope.currentPage - 1) * $scope.pageSize, pageSize : $scope.pageSize}})
             .success(function (data, status, headers, config) {
             $scope.meals = data;
@@ -82,13 +82,13 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
         getRecords();
     });
 
-    $http.get('../rest/account').success(function (data, status, headers, config) {
+    $http.get('../api/accounts').success(function (data, status, headers, config) {
         $scope.users = data;
     });
 });
 
 app.controller('TopCtrl', function ($http, $scope) {
-    $http.get('../rest/account').success(function (data, status, headers, config) {
+    $http.get('../api/accounts').success(function (data, status, headers, config) {
         $scope.users = data;
 
         var chart_data = {
@@ -122,7 +122,7 @@ app.controller('AccountCtrl', function ($scope, $http, Authentication) {
     $scope.pageSize = 10;
 
     var getPageCount = function() {
-        $http.get('../rest/account/' + Authentication.current() + "/entry/count")
+        $http.get('../api/accounts/' + Authentication.current() + "/entry/count")
             .success(function (data, status, headers, config) {
                 $scope.noOfPages = Math.ceil(data / $scope.pageSize);
                 if ($scope.noOfPages == 0)
@@ -132,7 +132,7 @@ app.controller('AccountCtrl', function ($scope, $http, Authentication) {
     getPageCount();
 
     var getRecords = function() {
-        $http.get('../rest/account/' + Authentication.current() +"/entry",
+        $http.get('../api/accounts/' + Authentication.current() +"/entry",
             {params: {start : ($scope.currentPage - 1) * $scope.pageSize, pageSize : $scope.pageSize}})
             .success(function (data, status, headers, config) {
                 $scope.entries = data;

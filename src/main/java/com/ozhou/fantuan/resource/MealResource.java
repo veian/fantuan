@@ -20,7 +20,7 @@ import com.ozhou.fantuan.service.AccountService;
 import com.ozhou.utils.DtoBoConverter;
  
 @Configurable(preConstruction=true)
-@Path("/meal")
+@Path("/meals")
 public class MealResource {
 	
 	@Autowired
@@ -33,7 +33,7 @@ public class MealResource {
 	public MealResource() {}
 	
 	@GET
-	@Path("/user")
+	@Path("/")
 	@Produces({"application/json"})
 	public Response getMealRecordForUser(@QueryParam("user") String user, 
 			@QueryParam("start") int start, @QueryParam("pageSize") int pageSize) {
@@ -54,7 +54,7 @@ public class MealResource {
 	}
 	
 	@GET
-	@Path("/user/count")
+	@Path("/count")
 	@Produces({"application/json"})
 	public Response getMealRecordCountForUser(@QueryParam("user") String user) {
 		Long count = mealRecordDao.getMealRecordForUserCount(user);

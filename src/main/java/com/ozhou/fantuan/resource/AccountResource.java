@@ -20,7 +20,7 @@ import com.ozhou.fantuan.resource.dto.AccountEntryDto;
 import com.ozhou.utils.DtoBoConverter;
 
 @Configurable(preConstruction=true)
-@Path("/account")
+@Path("/accounts")
 public class AccountResource {
 
 	@Autowired
