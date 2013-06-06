@@ -2,7 +2,7 @@
 
 var app = angular.module('Fantuan');
 
-app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
+app.controller('MyCtrl', function ($scope, Authentication, $location, Account, Meal) {
     if (Authentication.current() == null) {
         $location.path("/login");
         return;
@@ -27,9 +27,9 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
 
     //Fetch balance
     var getBalance = function () {
-        $http.get('../api/accounts/' + Authentication.current()).success(function (data, status, headers, config) {
-            $scope.balance = data.balance;
-        });
+          Account.get({user: Authentication.current()}, function(data) {
+              $scope.balance = data.balance;
+          });
     };
     $scope.balance = getBalance();
 
@@ -43,13 +43,13 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
             $scope.enterNewMeal = true;
         else {
             $scope.submitting = true;
-            $http.post('../api/meals', $scope.meal).success(function (data, status, headers, config) {
+            Meal.save({}, $scope.meal, function() {
                 getRecords();
                 $scope.enterNewMeal = false;
                 $scope.balance = getBalance();
 
                 $scope.submitting = false;
-            }).error(function(data, status, headers, config) {
+            }, function() {
                 $scope.submitting = false;
             });
         }
@@ -60,35 +60,31 @@ app.controller('MyCtrl', function ($http, $scope, Authentication, $location) {
 
     // Fetch record by user
     var getPageCount = function() {
-        $http.get('../api/meals/count',
-            {params: {user: Authentication.current()}})
-            .success(function (data, status, headers, config) {
-                $scope.noOfPages = Math.ceil(data / $scope.pageSize);
-                if ($scope.noOfPages == 0)
-                    $scope.noOfPages = 1;
-            });
+        Meal.count({user: Authentication.current()}, function(data) {
+            $scope.noOfPages = Math.ceil(data.count / $scope.pageSize);
+            if ($scope.noOfPages == 0)
+                $scope.noOfPages = 1;
+        });
     }
     getPageCount();
 
     var getRecords = function() {
-        $http.get('../api/meals',
-            {params: {user: Authentication.current(), start : ($scope.currentPage - 1) * $scope.pageSize, pageSize : $scope.pageSize}})
-            .success(function (data, status, headers, config) {
-            $scope.meals = data;
-        });
+        $scope.meals = Meal.query(
+               {user: Authentication.current(),
+                start : ($scope.currentPage - 1) * $scope.pageSize,
+                pageSize : $scope.pageSize})
     }
+
     getRecords();
     $scope.$watch("currentPage", function(newValue, oldValue) {
         getRecords();
     });
 
-    $http.get('../api/accounts').success(function (data, status, headers, config) {
-        $scope.users = data;
-    });
+    $scope.users = Account.query();
 });
 
-app.controller('TopCtrl', function ($http, $scope) {
-    $http.get('../api/accounts').success(function (data, status, headers, config) {
+app.controller('TopCtrl', function (Account, $scope) {
+    Account.query(function(data) {
         $scope.users = data;
 
         var chart_data = {
@@ -112,31 +108,26 @@ app.controller('TopCtrl', function ($http, $scope) {
 
         $scope.chart_data = chart_data;
     });
-
 });
 
 
-app.controller('AccountCtrl', function ($scope, $http, Authentication) {
+app.controller('AccountCtrl', function ($scope, $resource, AccountEntry) {
     $scope.noOfPages = 1;
     $scope.currentPage = 1;
     $scope.pageSize = 10;
 
     var getPageCount = function() {
-        $http.get('../api/accounts/' + Authentication.current() + "/entry/count")
-            .success(function (data, status, headers, config) {
-                $scope.noOfPages = Math.ceil(data / $scope.pageSize);
-                if ($scope.noOfPages == 0)
-                    $scope.noOfPages = 1;
-            });
+        AccountEntry.count(function(total) {
+            $scope.noOfPages = Math.ceil(total.count / $scope.pageSize);
+            if ($scope.noOfPages == 0)
+                $scope.noOfPages = 1;
+        });
     }
     getPageCount();
 
     var getRecords = function() {
-        $http.get('../api/accounts/' + Authentication.current() +"/entry",
-            {params: {start : ($scope.currentPage - 1) * $scope.pageSize, pageSize : $scope.pageSize}})
-            .success(function (data, status, headers, config) {
-                $scope.entries = data;
-            });
+        $scope.entries = AccountEntry.query(
+            {start : ($scope.currentPage - 1) * $scope.pageSize, pageSize : $scope.pageSize});
     }
     getRecords();
     $scope.$watch("currentPage", function(newValue, oldValue) {

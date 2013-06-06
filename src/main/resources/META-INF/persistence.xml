@@ -11,26 +11,6 @@
         <class>com.ozhou.fantuan.model.Account</class>
         <class>com.ozhou.fantuan.model.AccountEntry</class>
         <!-- <properties>
-            <property name="hibernate.connection.driver_class" value="org.h2.Driver" />
-            <property name="hibernate.connection.url" value="jdbc:h2:mem:test?characterEncoding=utf8;DB_CLOSE_DELAY=-1" />
-            <property name="hibernate.connection.username" value="sa" />
-            <property name="hibernate.connection.password" value="" />
-            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
-            <property name="hibernate.show_sql" value="true" />
-            <property name="hibernate.format_sql" value="false" />
-            <property name="hibernate.hbm2ddl.auto" value="update" />
-        </properties> -->
-        <!-- <properties>
-            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/fantuan?characterEncoding=utf8" />
-            <property name="hibernate.connection.username" value="user" />
-            <property name="hibernate.connection.password" value="Password1" />
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
-            <property name="hibernate.show_sql" value="true" />
-            <property name="hibernate.format_sql" value="false" />
-            <property name="hibernate.hbm2ddl.auto" value="update" />
-        </properties> -->
-        <!-- <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test?characterEncoding=utf8;DB_CLOSE_DELAY=-1" />
             <property name="javax.persistence.jdbc.user" value="sa" />

@@ -58,7 +58,7 @@ public class MealResource {
 	@Produces({"application/json"})
 	public Response getMealRecordCountForUser(@QueryParam("user") String user) {
 		Long count = mealRecordDao.getMealRecordForUserCount(user);
-		return Response.status(200).entity(count).build();
+		return Response.status(200).entity("{\"count\": " + count + "}").build();
 	}
 
 }

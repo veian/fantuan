@@ -64,6 +64,6 @@ public class AccountResource {
 	@Produces({"application/json"})
 	public Response getAccountEntriesCount(@PathParam("user") String user) {
 		Long count = accountDao.getAccountEntryByUserCount(user);
-		return Response.status(200).entity(count).build();
+		return Response.status(200).entity("{\"count\": " + count + "}").build();
 	}
 }
