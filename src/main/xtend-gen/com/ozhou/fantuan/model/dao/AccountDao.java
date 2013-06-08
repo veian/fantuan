@@ -3,7 +3,9 @@ package com.ozhou.fantuan.model.dao;
 import com.ozhou.fantuan.model.Account;
 import com.ozhou.fantuan.model.AccountEntry;
 import java.util.List;
+import javax.persistence.Cache;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -48,5 +50,14 @@ public class AccountDao {
     Object _singleResult = query.getSingleResult();
     Long count = ((Long) _singleResult);
     return count;
+  }
+  
+  public void clearCache() {
+    EntityManagerFactory _entityManagerFactory = this.entityManager.getEntityManagerFactory();
+    Cache _cache = _entityManagerFactory.getCache();
+    _cache.evict(Account.class);
+    EntityManagerFactory _entityManagerFactory_1 = this.entityManager.getEntityManagerFactory();
+    Cache _cache_1 = _entityManagerFactory_1.getCache();
+    _cache_1.evict(AccountEntry.class);
   }
 }

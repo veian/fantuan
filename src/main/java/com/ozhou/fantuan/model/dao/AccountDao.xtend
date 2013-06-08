@@ -44,4 +44,9 @@ class AccountDao {
         var Long count = (query.singleResult) as Long;
         return count;
     }
+    
+    public def void clearCache() {
+        entityManager.entityManagerFactory.cache.evict(typeof(Account));
+        entityManager.entityManagerFactory.cache.evict(typeof(AccountEntry));
+    }
 }

@@ -3,6 +3,7 @@ package com.ozhou.fantuan.resource;
 import java.util.List;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -65,5 +66,13 @@ public class AccountResource {
 	public Response getAccountEntriesCount(@PathParam("user") String user) {
 		Long count = accountDao.getAccountEntryByUserCount(user);
 		return Response.status(200).entity("{\"count\": " + count + "}").build();
+	}
+	
+	@POST
+	@Path("/clear-cache")
+	@Produces({"application/json"})
+	public Response clearCache() {
+		accountDao.clearCache();
+		return Response.ok().build();
 	}
 }
