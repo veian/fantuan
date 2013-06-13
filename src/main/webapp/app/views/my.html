@@ -46,8 +46,8 @@
     <th>餐馆</th>
   </tr>
   </thead>
-  <tbody ng-repeat="meal in meals">
-    <tr>
+  <tbody>
+    <tr ng-repeat="meal in meals">
       <td>{{meal.date | date}}</td>
       <td>{{meal.amount}}</td>
       <td>{{meal.payer}}</td>

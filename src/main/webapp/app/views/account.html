@@ -8,8 +8,8 @@
     <th>日期</th>
   </tr>
   </thead>
-  <tbody ng-repeat="entry in entries">
-  <tr>
+  <tbody>
+  <tr ng-repeat="entry in entries">
     <td>{{entry.type}}</td>
     <td>{{entry.amount}}</td>
     <td>{{entry.date | date}}</td>
