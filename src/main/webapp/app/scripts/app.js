@@ -1,5 +1,3 @@
-'use strict';
-
 var app = angular.module('Fantuan', ['$strap.directives', 'ui', 'ngCookies', 'ngResource', 'ui.bootstrap', 'dangle']);
 
 app.config(['$routeProvider', function($routeProvider) {

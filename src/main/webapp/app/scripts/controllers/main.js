@@ -1,9 +1,10 @@
+/*global angular, _*/
 'use strict';
 
 var app = angular.module('Fantuan');
 
 app.controller('MyCtrl', function ($scope, Authentication, $location, Account, Meal) {
-    if (Authentication.current() == null) {
+    if (Authentication.current() === null) {
         $location.path("/login");
         return;
     }
@@ -53,7 +54,7 @@ app.controller('MyCtrl', function ($scope, Authentication, $location, Account, M
                 $scope.submitting = false;
             });
         }
-    }
+    };
     $scope.cancelMeal = function() {
         $scope.enterNewMeal = false;
     };
@@ -62,18 +63,18 @@ app.controller('MyCtrl', function ($scope, Authentication, $location, Account, M
     var getPageCount = function() {
         Meal.count({user: Authentication.current()}, function(data) {
             $scope.noOfPages = Math.ceil(data.count / $scope.pageSize);
-            if ($scope.noOfPages == 0)
+            if ($scope.noOfPages === 0)
                 $scope.noOfPages = 1;
         });
-    }
+    };
     getPageCount();
 
     var getRecords = function() {
         $scope.meals = Meal.query(
                {user: Authentication.current(),
                 start : ($scope.currentPage - 1) * $scope.pageSize,
-                pageSize : $scope.pageSize})
-    }
+                pageSize : $scope.pageSize});
+    };
 
     getRecords();
     $scope.$watch("currentPage", function(newValue, oldValue) {
@@ -98,12 +99,12 @@ app.controller('TopCtrl', function (Account, $scope) {
             }
         };
 
-        var negativeAccount = _.filter(data, function(item) { return item.balance < 0});
-        var terms = _.map(negativeAccount, function(item) { return {term : item.name, count : item.balance * -1}});
+        var negativeAccount = _.filter(data, function(item) { return item.balance < 0; });
+        var terms = _.map(negativeAccount, function(item) { return {term : item.name, count : item.balance * -1}; });
         chart_data.negative.terms = terms;
 
-        var positiveAccount = _.filter(data, function(item) { return item.balance >= 0});
-        var postiveTerms = _.map(positiveAccount, function(item) { return {term : item.name, count : item.balance}});
+        var positiveAccount = _.filter(data, function(item) { return item.balance >= 0; });
+        var postiveTerms = _.map(positiveAccount, function(item) { return {term : item.name, count : item.balance}; });
         chart_data.positive.terms = postiveTerms;
 
         $scope.chart_data = chart_data;
@@ -119,16 +120,16 @@ app.controller('AccountCtrl', function ($scope, $resource, AccountEntry) {
     var getPageCount = function() {
         AccountEntry.count(function(total) {
             $scope.noOfPages = Math.ceil(total.count / $scope.pageSize);
-            if ($scope.noOfPages == 0)
+            if ($scope.noOfPages === 0)
                 $scope.noOfPages = 1;
         });
-    }
+    };
     getPageCount();
 
     var getRecords = function() {
         $scope.entries = AccountEntry.query(
             {start : ($scope.currentPage - 1) * $scope.pageSize, pageSize : $scope.pageSize});
-    }
+    };
     getRecords();
     $scope.$watch("currentPage", function(newValue, oldValue) {
         getRecords();
