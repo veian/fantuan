@@ -10,7 +10,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ozhou.fantuan.model.MealRecord;
@@ -19,7 +18,6 @@ import com.ozhou.fantuan.resource.dto.MealRecordDto;
 import com.ozhou.fantuan.service.AccountService;
 import com.ozhou.utils.DtoBoConverter;
  
-@Configurable(preConstruction=true)
 @Path("/meals")
 public class MealResource {
 	

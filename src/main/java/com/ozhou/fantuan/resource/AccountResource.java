@@ -11,7 +11,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 
 import com.ozhou.fantuan.model.Account;
 import com.ozhou.fantuan.model.AccountEntry;
@@ -20,7 +19,6 @@ import com.ozhou.fantuan.resource.dto.AccountDto;
 import com.ozhou.fantuan.resource.dto.AccountEntryDto;
 import com.ozhou.utils.DtoBoConverter;
 
-@Configurable(preConstruction=true)
 @Path("/accounts")
 public class AccountResource {
 

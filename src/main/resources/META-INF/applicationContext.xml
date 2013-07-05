@@ -24,8 +24,10 @@
     <context:spring-configured />
     <context:component-scan base-package="com.ozhou.utils"/>
     <context:component-scan base-package="com.ozhou.fantuan.model.dao"/>
-    <context:component-scan base-package="com.ozhou.fantuan.resource.converter"/>
     <context:component-scan base-package="com.ozhou.fantuan.service"/>
+    <context:component-scan base-package="com.ozhou.fantuan.resource">
+        <context:include-filter type="annotation" expression="javax.ws.rs.Path"/>
+     </context:component-scan>
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
     <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor" />
     
