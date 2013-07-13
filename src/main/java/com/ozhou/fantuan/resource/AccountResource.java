@@ -2,6 +2,7 @@ package com.ozhou.fantuan.resource;
 
 import java.util.List;
 
+import javax.validation.constraints.Min;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -39,7 +40,7 @@ public class AccountResource {
 	@GET
 	@Path("/{user}")
 	@Produces({"application/json"})
-	public Response getAccount(@PathParam("user") String user) {
+	public Response getAccount(@PathParam("user") @Min(3) String user) {
 		Account account = accountDao.get(user);
 		if (account == null)
 			return Response.status(404).build();
