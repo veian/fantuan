@@ -11,7 +11,7 @@
         <aspectj.version>1.6.11</aspectj.version>
         <hibernate.version>4.1.1.Final</hibernate.version>
         <eclipseLink.version>2.5.0</eclipseLink.version>
-        <resteasy.version>3.0.1.Final</resteasy.version>
+        <resteasy.version>3.0.2.Final</resteasy.version>
     </properties>
 
     <dependencyManagement>
