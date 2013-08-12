@@ -1,7 +1,7 @@
-var app = angular.module('Fantuan', ['$strap.directives', 'ui', 'ngCookies', 'ngResource', 'ui.bootstrap', 'dangle']);
-
-app.config(['$routeProvider', function($routeProvider) {
-    $routeProvider.
+var app = angular.module('Fantuan', 
+						['$strap.directives', 'ui', 'ngCookies', 'ui.bootstrap', 'dangle', 'restangular'],
+						function ($routeProvider, RestangularProvider) {
+	$routeProvider.
        when('/my', {
             controller: 'MyCtrl',
             templateUrl:'views/my.html'
@@ -12,4 +12,6 @@ app.config(['$routeProvider', function($routeProvider) {
             controller: 'TopCtrl',
             templateUrl:'views/top.html'
         }).otherwise({redirectTo:'/my'});
-}]);
+	
+	RestangularProvider.setBaseUrl("../api/");
+});

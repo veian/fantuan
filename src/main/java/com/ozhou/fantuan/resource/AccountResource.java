@@ -41,7 +41,7 @@ public class AccountResource {
 	@GET
 	@Path("/{user}")
 	@Produces({"application/json"})
-	public AccountDto getAccount(@PathParam("user") @Min(3) String user) {
+	public AccountDto getAccount(@PathParam("user") String user) {
 		Account account = accountDao.get(user);
 		if (account == null)
 			throw new NotFoundException();

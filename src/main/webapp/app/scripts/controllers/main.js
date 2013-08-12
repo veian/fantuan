@@ -3,7 +3,7 @@
 
 var app = angular.module('Fantuan');
 
-app.controller('MyCtrl', function ($scope, Authentication, $location, Account, Meal) {
+app.controller('MyCtrl', function ($scope, Authentication, $location, Restangular) {
     if (Authentication.current() === null) {
         $location.path("/login");
         return;
@@ -28,9 +28,9 @@ app.controller('MyCtrl', function ($scope, Authentication, $location, Account, M
 
     //Fetch balance
     var getBalance = function () {
-          Account.get({user: Authentication.current()}, function(data) {
-              $scope.balance = data.balance;
-          });
+    	Restangular.one("accounts", Authentication.current()).get().then(function (data) {
+    		$scope.balance = data.balance;
+    	});
     };
     $scope.balance = getBalance();
 
@@ -44,7 +44,7 @@ app.controller('MyCtrl', function ($scope, Authentication, $location, Account, M
             $scope.enterNewMeal = true;
         else {
             $scope.submitting = true;
-            Meal.save({}, $scope.meal, function() {
+			Restangular.all("meals").post($scope.meal).then(function() {
                 getRecords();
                 $scope.enterNewMeal = false;
                 $scope.balance = getBalance();
@@ -61,7 +61,7 @@ app.controller('MyCtrl', function ($scope, Authentication, $location, Account, M
 
     // Fetch record by user
     var getPageCount = function() {
-        Meal.count({user: Authentication.current()}, function(data) {
+		Restangular.all("meals").customGET("count", {user: Authentication.current()}).then(function(data) {
             $scope.noOfPages = Math.ceil(data.count / $scope.pageSize);
             if ($scope.noOfPages === 0)
                 $scope.noOfPages = 1;
@@ -70,7 +70,7 @@ app.controller('MyCtrl', function ($scope, Authentication, $location, Account, M
     getPageCount();
 
     var getRecords = function() {
-        $scope.meals = Meal.query(
+		$scope.meals = Restangular.all("meals").getList(
                {user: Authentication.current(),
                 start : ($scope.currentPage - 1) * $scope.pageSize,
                 pageSize : $scope.pageSize});
@@ -81,11 +81,11 @@ app.controller('MyCtrl', function ($scope, Authentication, $location, Account, M
         getRecords();
     });
 
-    $scope.users = Account.query();
+    $scope.users = Restangular.all("accounts").getList();
 });
 
-app.controller('TopCtrl', function (Account, $scope) {
-    Account.query(function(data) {
+app.controller('TopCtrl', function ($scope, Restangular) {
+	Restangular.all("accounts").getList().then(function(data) {
         $scope.users = data;
 
         var chart_data = {
@@ -112,13 +112,13 @@ app.controller('TopCtrl', function (Account, $scope) {
 });
 
 
-app.controller('AccountCtrl', function ($scope, $resource, AccountEntry) {
+app.controller('AccountCtrl', function ($scope, Restangular, Authentication) {
     $scope.noOfPages = 1;
     $scope.currentPage = 1;
     $scope.pageSize = 10;
 
     var getPageCount = function() {
-        AccountEntry.count(function(total) {
+		Restangular.one("accounts", Authentication.current()).customGET("entry/count").then(function(total) {
             $scope.noOfPages = Math.ceil(total.count / $scope.pageSize);
             if ($scope.noOfPages === 0)
                 $scope.noOfPages = 1;
@@ -127,8 +127,8 @@ app.controller('AccountCtrl', function ($scope, $resource, AccountEntry) {
     getPageCount();
 
     var getRecords = function() {
-        $scope.entries = AccountEntry.query(
-            {start : ($scope.currentPage - 1) * $scope.pageSize, pageSize : $scope.pageSize});
+		$scope.entries = Restangular.one("accounts", Authentication.current()).customGETLIST("entry",
+			{start : ($scope.currentPage - 1) * $scope.pageSize, pageSize : $scope.pageSize});
     };
     getRecords();
     $scope.$watch("currentPage", function(newValue, oldValue) {
