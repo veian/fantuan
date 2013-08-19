@@ -47,13 +47,12 @@
           <li data-match-route="/top"><a href="./#/top">排行榜</a></li>
         </ul>
 
-        <div class="btn-group pull-right" style="margin-right: 0px" ng-controller="LogoutController" ng-show="loginUser != null">
+        <div class="btn-group pull-right" style="margin-right: 0px" ng-controller="LogoutController">
           <a class="btn btn-user dropdown-toggle" data-toggle="dropdown" href="#">
-            <i class="icon-user"></i> {{ loginUser }}
-            <span class="caret"></span>
+            <i class="icon-user"> {{loginUser != null && loginUser || '未登陆'}}</i>
           </a>
           <ul class="dropdown-menu">
-            <li><a ng-click="logout()">退出</a></li>
+            <li><a ng-click="logout()">{{loginUser != null && '退出' || '登陆'}}</a></li>
           </ul>
         </div>
       </div>
