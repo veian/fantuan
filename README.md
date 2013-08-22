@@ -6,7 +6,6 @@
 ###开发环境
 * Eclipse 3.7 J2EE
 * AspectJ Development Tools 2.2
-* Xtend 2.4
 
 ###使用的框架
 ####客户端
@@ -23,7 +22,5 @@
 * JPA - EclipseLink
 * Orika - DTO/BO Mapping Library
 
-####说明
-大部分代码用Java编写，小部分代码用Xtend编写
 
 
