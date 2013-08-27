@@ -1,6 +1,5 @@
 <h1>我的饭局</h1>
 
-<p class="lead">我的余额： {{ balance | number:2 }}</p>
 <button class="btn btn-primary" ng-click="newMeal()" ng-show="!enterNewMeal">创建新饭局</button>
 <form name="myForm" ng-show="enterNewMeal" ng-submit="newMeal()">
   <fieldset ng-disabled="submitting">
@@ -31,30 +30,33 @@
       <input type="text" ui-select2="restaurantOptions" ng-model="restaurantOption" style="width:300px" required />
     </div>
 
-    <button class="btn btn-primary" ng-disabled="myForm.$invalid" type="submit">创建新饭局</button>
+    <button class="btn btn-primary" ng-disabled="myForm.$invalid" type="submit">创建</button>
     <button class="btn" ng-click="cancelMeal()" ng-show="enterNewMeal">取消</button>
   </fieldset>
 </form>
 
-<table class="table">
-  <thead>
-  <tr>
-    <th>日期</th>
-    <th>费用</th>
-    <th>买单</th>
-    <th>参与人员</th>
-    <th>餐馆</th>
-  </tr>
-  </thead>
-  <tbody>
+<p class="lead">余额： {{ balance | number:2 }}</p>
+<table ng-table="tableParams" class="table ng-table-responsive">
     <tr ng-repeat="meal in meals">
-      <td>{{meal.date | date}}</td>
-      <td>{{meal.amount}}</td>
-      <td>{{meal.payer}}</td>
-      <td><span ng-repeat="participant in meal.participants">{{participant}}<span ui-if="!$last">, </span></span></td>
-      <td>{{meal.restaurant}}</td>
+        <td data-title="'日期'">
+            {{meal.date | date}}
+        </td>
+        <td data-title="'费用'">
+            {{meal.amount | number:2 }}
+        </td>
+        <td data-title="'买单'">
+            {{meal.payer}}
+        </td>
+        <td data-title="'饭友'">
+            <span ng-repeat="participant in meal.participants">{{participant}}
+              <span ui-if="!$last">, 
+              </span>
+            </span>
+        </td>
+        <td data-title="'餐馆'">
+            {{meal.restaurant}}
+        </td>
     </tr>
-  </tbody>
 </table>
-<pagination num-pages="noOfPages" current-page="currentPage" previous-text="前一页" next-text="下一页"></pagination>
+
 

@@ -1,19 +1,16 @@
 <h1>我的帐户</h1>
 
-<table class="table" style="width: 500px">
-  <thead>
-  <tr>
-    <th>类型</th>
-    <th>金额</th>
-    <th>日期</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr ng-repeat="entry in entries">
-    <td>{{entry.type}}</td>
-    <td>{{entry.amount}}</td>
-    <td>{{entry.date | date}}</td>
-  </tr>
-  </tbody>
+<table ng-table="tableParams" class="table ng-table-responsive">
+    <tr ng-repeat="entry in entries">
+        <td data-title="'类型'">
+            {{entry.type}}
+        </td>
+        <td data-title="'金额'">
+            {{entry.amount | number:2}}
+        </td>
+        <td data-title="'日期'">
+            {{entry.date | date}}
+        </td>
+    </tr>
 </table>
-<pagination num-pages="noOfPages" current-page="currentPage" previous-text="前一页" next-text="下一页"></pagination>
+

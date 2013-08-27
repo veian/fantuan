@@ -11,7 +11,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
+import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ozhou.fantuan.model.Account;
 import com.ozhou.fantuan.model.AccountEntry;
@@ -28,14 +30,31 @@ public class AccountResource {
 	private AccountDao accountDao;
 	@Autowired
 	private DtoBoConverter converter;
+
+	@POST
+	@Path("/")
+	@Produces({"application/json"})
+	@Transactional
+	public void putAccount(@NotNull AccountDto record) {
+		Account account = converter.getMappingFacade().map(record, Account.class);
+		accountDao.save(account);
+	}
 	
 	@GET
 	@Path("/")
 	@Produces({"application/json"})
-	public List<AccountDto> getAccounts() {
-		List<Account> accounts = accountDao.getAll();
+	public List<AccountDto> getAccounts(@QueryParam("start") int start, @QueryParam("pageSize") int pageSize) {
+		List<Account> accounts = accountDao.getAll(start, pageSize);
 		List<AccountDto> dtos = converter.getMappingFacade().mapAsList(accounts, AccountDto.class);
 		return dtos;
+	}
+
+	@GET
+	@Path("/count")
+	@Produces({"application/json"})
+	public CountDto getAccountsCount() {
+		Long count = accountDao.getCount();
+		return new CountDto(count);
 	}
 	
 	@GET
