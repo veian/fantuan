@@ -1,14 +1,10 @@
 <h1>排行榜</h1>
 
 <table ng-table="tableParams" class="table ng-table-responsive">
-    <tr ng-repeat="user in users">
-        <td data-title="'用户名'">
-            {{user.name}}
-        </td>
-        <td data-title="'余额'">
-            {{user.balance  | number:2 }}
-        </td>
-    </tr>
+  <tr ng-repeat="user in users">
+    <td data-title="'用户名'">{{user.name}}</td>
+    <td data-title="'余额'">{{user.balance  | number:2 }}</td>
+  </tr>
 </table>
 
 <div style="height: 100px">
@@ -17,5 +13,3 @@
 <div style="height: 200px">
   <fs-bar bind="chart_data.positive" width="600" height="60" duration="750"/>
 </div>
-
-
