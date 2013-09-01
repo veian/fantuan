@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Repository;
 
 import com.ozhou.fantuan.model.Account;
@@ -15,15 +16,35 @@ import com.ozhou.fantuan.model.AccountEntry;
 public class AccountDao {
     @PersistenceContext
     EntityManager entityManager;
+
+    @Transactional
+    public void save(Account account) {
+        entityManager.persist(account);
+    }
     
     public Account get(String name) {
         Account account = entityManager.find(Account.class, name);
         return account;
     }
     
-    public List<Account> getAll() {
-        List<Account> accounts = entityManager.createQuery("SELECT a FROM Account a ORDER BY a.balance", Account.class).getResultList();
-        return accounts;
+    public List<Account> getAll(int startPosition, int pageSize) {
+        TypedQuery<Account> query = entityManager.createQuery(
+            "SELECT a FROM Account a ORDER BY a.balance", Account.class);
+
+        if (startPosition >= 0)
+            query.setFirstResult(startPosition);
+        if (pageSize > 0)
+            query.setMaxResults(pageSize);
+        
+        return query.getResultList();
+    }
+
+    public Long getCount() {
+        TypedQuery<Long> query = entityManager.createQuery(
+            "SELECT COUNT(a) FROM Account a", Long.class);
+
+        Long count = query.getSingleResult();
+        return count;
     }
     
     public List<AccountEntry> getAccountEntryByUser(String user, int startPosition, int pageSize) {

@@ -1,18 +1,14 @@
 <h1>排行榜</h1>
 
-<table class="table" style="width: 500px">
-  <thead>
-  <tr>
-    <th>用户名</th>
-    <th>余额</th>
-  </tr>
-  </thead>
-  <tbody>
+<table ng-table="tableParams" class="table ng-table-responsive">
     <tr ng-repeat="user in users">
-      <td>{{user.name}}</td>
-      <td>{{user.balance}}</td>
+        <td data-title="'用户名'">
+            {{user.name}}
+        </td>
+        <td data-title="'余额'">
+            {{user.balance  | number:2 }}
+        </td>
     </tr>
-  </tbody>
 </table>
 
 <div style="height: 100px">

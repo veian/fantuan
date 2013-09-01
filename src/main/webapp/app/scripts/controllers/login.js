@@ -2,7 +2,7 @@
 
 var module = angular.module("Fantuan");
 // Login
-var Controller = function($rootScope, $scope, $location, Authentication) {
+var Controller = function($rootScope, $scope, $location, Authentication, Restangular) {
 
     if (Authentication.current()) {
       $location.path("/my");
@@ -22,6 +22,17 @@ var Controller = function($rootScope, $scope, $location, Authentication) {
         }
       });
     }
+
+    $scope.register = function() {
+        var newAccount = { name : $scope.username, balance : 0 };
+
+        Restangular.all("accounts").post(newAccount).then(function(success) {
+            if (success) {
+                    $scope.login();
+            }
+        }, function() {});
+    };
+
 };
 
 var RouteConfig = function($routeProvider) {

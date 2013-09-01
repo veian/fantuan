@@ -3,8 +3,8 @@
 
 var app = angular.module('Fantuan');
 
-app.controller('MyCtrl', function ($scope, Authentication, $location, Restangular) {
-    if (Authentication.current() === null) {
+app.controller('MyCtrl', function ($scope, Authentication, $location, Restangular, ngTableParams) {
+    if (Authentication.current() === null || Authentication.current() === undefined) {
         $location.path("/login");
         return;
     }
@@ -19,12 +19,15 @@ app.controller('MyCtrl', function ($scope, Authentication, $location, Restangula
     };
 
     $scope.restaurantOption = "";
-    $scope.noOfPages = 1;
-    $scope.currentPage = 1;
-    $scope.pageSize = 10;
     $scope.submitting = false;
     $scope.meal = { payer : Authentication.current() };
     $scope.enterNewMeal = false;
+
+    $scope.tableParams = new ngTableParams({
+        page: 1,            // show first page
+        count: 5,           // count per page
+        counts:[]
+    });
 
     //Fetch balance
     var getBalance = function () {
@@ -45,7 +48,7 @@ app.controller('MyCtrl', function ($scope, Authentication, $location, Restangula
         else {
             $scope.submitting = true;
 			Restangular.all("meals").post($scope.meal).then(function() {
-                getRecords();
+                getRecords($scope.tableParams);
                 $scope.enterNewMeal = false;
                 $scope.balance = getBalance();
 
@@ -62,76 +65,106 @@ app.controller('MyCtrl', function ($scope, Authentication, $location, Restangula
     // Fetch record by user
     var getPageCount = function() {
 		Restangular.all("meals").customGET("count", {user: Authentication.current()}).then(function(data) {
-            $scope.noOfPages = Math.ceil(data.count / $scope.pageSize);
-            if ($scope.noOfPages === 0)
-                $scope.noOfPages = 1;
+            $scope.tableParams.total = data.count;
         });
     };
     getPageCount();
 
-    var getRecords = function() {
+    var getRecords = function(param) {
 		$scope.meals = Restangular.all("meals").getList(
-               {user: Authentication.current(),
-                start : ($scope.currentPage - 1) * $scope.pageSize,
-                pageSize : $scope.pageSize});
+            {user: Authentication.current(),
+             start : (param.page - 1) * param.count, 
+             pageSize : param.count});
     };
 
-    getRecords();
-    $scope.$watch("currentPage", function(newValue, oldValue) {
-        getRecords();
-    });
+    getRecords($scope.tableParams);
 
     $scope.users = Restangular.all("accounts").getList();
+
+    $scope.$watch("tableParams", function(param) {
+        getRecords(param);
+    });    
 });
 
-app.controller('TopCtrl', function ($scope, Restangular) {
-	Restangular.all("accounts").getList().then(function(data) {
-        $scope.users = data;
+app.controller('TopCtrl', function ($scope, Restangular, ngTableParams) {
 
-        var chart_data = {
-            negative : {
-                negative : true,
-                terms : []
-            },
-            positive : {
-                negative : false,
-                terms : []
-            }
-        };
+    $scope.tableParams = new ngTableParams({
+        page: 1,            // show first page
+        count: 5,           // count per page
+        counts:[]
+    });
+	
+    var getAccountCount = function() {
+        Restangular.one("accounts").customGET("count").then(function(total) {
+            $scope.tableParams.total = total.count;
+        });
+    };
+    getAccountCount();
+        
+    var getRecords = function(param) {
+        $scope.users = Restangular.one("accounts").customGETLIST("",
+            {start : (param.page - 1) * param.count, pageSize :param.count});
+    };
 
-        var negativeAccount = _.filter(data, function(item) { return item.balance < 0; });
-        var terms = _.map(negativeAccount, function(item) { return {term : item.name, count : item.balance * -1}; });
-        chart_data.negative.terms = terms;
+    getRecords($scope.tableParams);
 
-        var positiveAccount = _.filter(data, function(item) { return item.balance >= 0; });
-        var postiveTerms = _.map(positiveAccount, function(item) { return {term : item.name, count : item.balance}; });
-        chart_data.positive.terms = postiveTerms;
+    var getChartData = function() {
+        Restangular.one("accounts").customGETLIST("",
+                {start : -1, pageSize : -1}).then(function(data) {
 
-        $scope.chart_data = chart_data;
+            var chart_data = {
+                negative : {
+                    negative : true,
+                    terms : []
+                },
+                positive : {
+                    negative : false,
+                    terms : []
+                }
+            };
+
+            var negativeAccount = _.filter(data, function(item) { return item.balance < 0; });
+            var terms = _.map(negativeAccount, function(item) { return {term : item.name, count : item.balance * -1}; });
+            chart_data.negative.terms = terms;
+
+            var positiveAccount = _.filter(data, function(item) { return item.balance >= 0; });
+            var postiveTerms = _.map(positiveAccount, function(item) { return {term : item.name, count : item.balance}; });
+            chart_data.positive.terms = postiveTerms;
+
+            $scope.chart_data = chart_data;
+        });
+    };
+    
+    getChartData();
+
+    $scope.$watch("tableParams", function(param) {
+        getRecords(param);
     });
 });
 
 
-app.controller('AccountCtrl', function ($scope, Restangular, Authentication) {
-    $scope.noOfPages = 1;
-    $scope.currentPage = 1;
-    $scope.pageSize = 10;
+app.controller('AccountCtrl', function ($scope, Restangular, Authentication, ngTableParams) {
+
+    $scope.tableParams = new ngTableParams({
+        page: 1,            // show first page
+        count: 5,           // count per page
+        counts:[]
+    });
 
     var getPageCount = function() {
 		Restangular.one("accounts", Authentication.current()).customGET("entry/count").then(function(total) {
-            $scope.noOfPages = Math.ceil(total.count / $scope.pageSize);
-            if ($scope.noOfPages === 0)
-                $scope.noOfPages = 1;
+            $scope.tableParams.total = total.count;
         });
     };
     getPageCount();
 
-    var getRecords = function() {
+    var getRecords = function(param) {
 		$scope.entries = Restangular.one("accounts", Authentication.current()).customGETLIST("entry",
-			{start : ($scope.currentPage - 1) * $scope.pageSize, pageSize : $scope.pageSize});
+			{start : (param.page - 1) * param.count, pageSize :param.count});
     };
-    getRecords();
-    $scope.$watch("currentPage", function(newValue, oldValue) {
-        getRecords();
+    getRecords($scope.tableParams);
+
+    $scope.$watch("tableParams", function(param) {
+        getRecords(param);
     });
 });
