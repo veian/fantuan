@@ -2,7 +2,6 @@ package com.ozhou.fantuan.resource;
 
 import java.util.List;
 
-import javax.validation.constraints.Min;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;

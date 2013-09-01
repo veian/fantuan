@@ -1,5 +1,6 @@
 package com.ozhou.utils;
 
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
@@ -19,7 +20,7 @@ public class CustomizedResteasyViolationExceptionMapper extends
 			Status status) {
 		ExceptionDto exceptionDto = new ExceptionDto("ValidationException",
 					entity.toString());
-		ResponseBuilder builder = Response.status(status).entity(exceptionDto);
+		ResponseBuilder builder = Response.status(status).entity(new GenericEntity<ExceptionDto>(exceptionDto, ExceptionDto.class));
 		builder.type(MediaType.APPLICATION_JSON_TYPE);
 		return builder.build();
 	}

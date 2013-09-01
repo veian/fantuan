@@ -3,12 +3,12 @@ package com.ozhou.fantuan.resource;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,13 +35,11 @@ public class MealResource {
 	@GET
 	@Path("/")
 	@Produces({"application/json"})
-	// Cannot directly return list of records because issue:
-	// https://issues.jboss.org/browse/RESTEASY-834
-	public Response getMealRecordForUser(@QueryParam("user") @NotNull String user, 
+	public List<MealRecordDto> getMealRecordForUser(@QueryParam("user") @NotNull @Size(min=3) String user, 
 			@QueryParam("start") int start, @QueryParam("pageSize") int pageSize) {
 		List<MealRecord> mealRecords = mealRecordDao.getMealRecordForUser(user, start, pageSize);
 		List<MealRecordDto> records = converter.getMappingFacade().mapAsList(mealRecords, MealRecordDto.class);
-		return Response.ok(records).build();
+		return records;
 	}
 	
 	@POST
