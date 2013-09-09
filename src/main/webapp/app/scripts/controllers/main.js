@@ -43,9 +43,7 @@ app.controller('MyCtrl', function($scope, Authentication, $location, Restangular
 
   $scope.tableParams = new ngTableParams({
     page: 1,
-    // show first page
     count: 5,
-    // count per page
     counts: []
   });
 
@@ -111,12 +109,9 @@ app.controller('MyCtrl', function($scope, Authentication, $location, Restangular
 });
 
 app.controller('TopCtrl', function($scope, Restangular, ngTableParams) {
-
   $scope.tableParams = new ngTableParams({
     page: 1,
-    // show first page
     count: 5,
-    // count per page
     counts: []
   });
 
@@ -141,41 +136,13 @@ app.controller('TopCtrl', function($scope, Restangular, ngTableParams) {
         start: -1,
         pageSize: -1
       }).then(function(data) {
-
-        var chart_data = {
-          negative: {
-            negative: true,
-            terms: []
-          },
-          positive: {
-            negative: false,
-            terms: []
+        $scope.topChartData = [{
+            key: "Data",
+            values: _.map(data, function(item) {
+              return [item.name, item.balance];
+            })
           }
-        };
-
-        var negativeAccount = _.filter(data, function(item) {
-          return item.balance < 0;
-        });
-        var terms = _.map(negativeAccount, function(item) {
-          return {
-            term: item.name,
-            count: item.balance * -1
-          };
-        });
-        chart_data.negative.terms = terms;
-
-        var positiveAccount = _.filter(data, function(item) {
-          return item.balance >= 0;
-        });
-        var postiveTerms = _.map(positiveAccount, function(item) {
-          return {
-            term: item.name,
-            count: item.balance
-          };
-        });
-        chart_data.positive.terms = postiveTerms;
-
-        $scope.chart_data = chart_data;
+        ];
       });
     };
 
@@ -188,12 +155,9 @@ app.controller('TopCtrl', function($scope, Restangular, ngTableParams) {
 
 
 app.controller('AccountCtrl', function($scope, Restangular, Authentication, ngTableParams) {
-
   $scope.tableParams = new ngTableParams({
     page: 1,
-    // show first page
     count: 5,
-    // count per page
     counts: []
   });
 

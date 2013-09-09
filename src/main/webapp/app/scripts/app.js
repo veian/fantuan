@@ -1,4 +1,4 @@
-var app = angular.module('Fantuan', ['$strap.directives', 'ui', 'ngCookies', 'ui.bootstrap', 'dangle', 'restangular', 'ngTable'], 
+var app = angular.module('Fantuan', ['$strap.directives', 'ui', 'ngCookies', 'ui.bootstrap', 'restangular', 'ngTable', 'nvd3ChartDirectives'], 
   function($routeProvider, RestangularProvider) {
   $routeProvider.
   when('/my', {

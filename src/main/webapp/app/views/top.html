@@ -7,9 +7,6 @@
   </tr>
 </table>
 
-<div style="height: 100px">
-  <fs-bar class="negtive" bind="chart_data.negative" width="600" height="80" duration="750"/>
-</div>
-<div style="height: 200px">
-  <fs-bar bind="chart_data.positive" width="600" height="60" duration="750"/>
-</div>
+<nvd3-discrete-bar-chart data="topChartData" id="topChart" width="800" height="400" showvalues="true" staggerlabels="false">
+  <svg></svg>
+</nvd3-discrete-bar-chart>
