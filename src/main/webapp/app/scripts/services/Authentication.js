@@ -11,7 +11,8 @@ function AuthenticationFactory($http, $q, $rootScope) {
     var self = this;
     return $http.get("../api/auth/user").success(function(data) {
       self.set(data);
-      $rootScope.$broadcast("login.success");
+      if (data != "anonymousUser")
+        $rootScope.$broadcast("login.success");
     });
   };
 
@@ -50,13 +51,13 @@ function AuthenticationFactory($http, $q, $rootScope) {
       promise = $http.post("../j_spring_security_logout");
 
     return promise.then(function() {
-      self.set(null);
+      self.set("anonymousUser");
       return true;
     });
   };
 
   Authentication.prototype.clear = function() {
-    this.set(null);
+    this.set("anonymousUser");
   };
 
   return new Authentication();

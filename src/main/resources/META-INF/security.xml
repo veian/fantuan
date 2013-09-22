@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bean:beans xmlns:bean="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/security"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <!-- <http security="none"> </http> -->
     <http entry-point-ref="restAuthenticationEntryPoint" access-decision-manager-ref="accessDecisionManager">
         <intercept-url pattern="/api/meals/**" access="ROLE_USER" />
+        <intercept-url pattern="/api/accounts/*/entry/**" access="ROLE_USER" />
         <form-login authentication-success-handler-ref="mySuccessHandler" authentication-failure-handler-ref="myFailureHandler" />
         <logout />
     </http>

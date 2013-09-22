@@ -4,10 +4,6 @@ var module = angular.module("Fantuan");
 // Login
 var Controller = function($rootScope, $scope, $location, Authentication, Restangular) {
 
-    if (Authentication.current()) {
-      $location.path("/my");
-    }
-
     $scope.login = function() {
       Authentication.login($scope.username, $scope.password).then(function(success) {
         //Notifications.clearAll();
