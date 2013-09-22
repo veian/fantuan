@@ -24,6 +24,7 @@ var Controller = function($rootScope, $scope, $location, Authentication, Restang
     $scope.register = function() {
       var newAccount = {
         name: $scope.username,
+        password: $scope.password,
         balance: 0
       };
 

@@ -9,15 +9,22 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.google.common.collect.Lists;
 
 @Entity
+@Table(name = "users")
 public class Account {
 
 	@Id
+	@Column(name = "username")
 	private String name;
-	@Column(precision=10, scale=2)
+	@Column(name = "password")
+	private String password;
+	@Column(name = "enabled")
+	private boolean enabled = true;
+	@Column(name = "balance", precision=10, scale=2)
 	private BigDecimal balance;
 	@OneToMany(mappedBy="account", cascade = {CascadeType.ALL})
 	private List<AccountEntry> entries = Lists.newArrayList();
@@ -60,6 +67,18 @@ public class Account {
 		
 		getEntries().add(entry);
 		entry.setAccount(this);
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public boolean isEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 	
 }

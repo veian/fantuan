@@ -4,10 +4,10 @@
 var app = angular.module('Fantuan');
 
 app.controller('MyCtrl', function($scope, Authentication, $location, Restangular, ngTableParams) {
-  if (Authentication.current() === null || Authentication.current() === undefined) {
-    $location.path("/login");
-    return;
-  }
+  // if (Authentication.current() === null || Authentication.current() === undefined) {
+  //   $location.path("/login");
+  //   return;
+  // }
 
   $scope.restaurantOptions = {
     data: [{

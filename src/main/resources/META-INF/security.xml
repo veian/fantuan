@@ -1,24 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bean:beans xmlns:bean="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/security"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-    <http security="none">
+    <!-- <http security="none"> </http> -->
+    <http entry-point-ref="restAuthenticationEntryPoint" access-decision-manager-ref="accessDecisionManager">
+        <intercept-url pattern="/api/meals/**" access="ROLE_USER" />
+        <form-login authentication-success-handler-ref="mySuccessHandler" authentication-failure-handler-ref="myFailureHandler" />
+        <logout />
     </http>
-    <!-- <http create-session="stateless">
-        <intercept-url pattern="/api/**" access="ROLE_USER" />
-        <http-basic/>
-    </http> -->
-    
+
+    <bean:bean id="myFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler"/>
+    <bean:bean id="mySuccessHandler"
+        class="com.ozhou.utils.RestSavedRequestAwareAuthenticationSuccessHandler" />
+
     <authentication-manager>
         <authentication-provider>
-            <user-service>
-                <user name="Oliver Zhou"
-                        password="123"
-                        authorities="ROLE_USER"/>
-            </user-service>
+            <jdbc-user-service data-source-ref="dataSource" />
         </authentication-provider>
     </authentication-manager>
+    
+    <bean xmlns="http://www.springframework.org/schema/beans" id="accessDecisionManager"
+        class="org.springframework.security.access.vote.AffirmativeBased">
+        <constructor-arg>
+            <list>
+                <ref bean="roleVoter" />
+            </list>
+        </constructor-arg>
+    </bean>
+    
+    <bean xmlns="http://www.springframework.org/schema/beans" id="roleVoter"
+        class="org.springframework.security.access.vote.RoleHierarchyVoter">
+        <constructor-arg>
+            <bean
+                class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+                <property name="hierarchy">
+                    <value>
+                        ROLE_ADMIN > ROLE_USER
+                    </value>
+                </property>
+            </bean>
+        </constructor-arg>
+    </bean>
 </bean:beans>

@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -30,8 +32,16 @@ public class MealRecord {
 	@Temporal(TemporalType.DATE)
 	private Date date;
 	@ManyToOne
+	@JoinColumn(name = "PAYER_NAME")
 	private Account payer;
 	@ManyToMany
+	@JoinTable(
+			name="MEALRECORD_ACCOUNT",
+	        joinColumns=
+	            @JoinColumn(name="MEALRECORD_ID", referencedColumnName="ID"),
+	        inverseJoinColumns=
+	            @JoinColumn(name="participants_NAME", referencedColumnName="username")
+	    )
 	private List<Account> participants = Lists.newArrayList();
 
 	public BigDecimal getAmount() {

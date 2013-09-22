@@ -1,9 +1,21 @@
-var app = angular.module('Fantuan', ['$strap.directives', 'ui', 'ngCookies', 'ui.bootstrap', 'restangular', 'ngTable', 'nvd3ChartDirectives'], 
-  function($routeProvider, RestangularProvider) {
+var app = angular.module('Fantuan', 
+  ['$strap.directives', 'ui', 'ui.bootstrap', 'restangular', 'ngTable', 'nvd3ChartDirectives'], 
+  function($routeProvider, RestangularProvider, $httpProvider) {
   $routeProvider.
   when('/my', {
     controller: 'MyCtrl',
-    templateUrl: 'views/my.html'
+    templateUrl: 'views/my.html',
+    resolve: {
+      auth: function(Authentication, $q) {
+        var deferred = $q.defer();
+        Authentication.getCurrentUserFromServer().then(function() {
+          deferred.resolve();
+        }, function() {
+          deferred.reject();
+        })
+        return deferred.promise;
+      }
+    }
   }).when('/account', {
     controller: 'AccountCtrl',
     templateUrl: 'views/account.html'
@@ -15,4 +27,23 @@ var app = angular.module('Fantuan', ['$strap.directives', 'ui', 'ngCookies', 'ui
   });
 
   RestangularProvider.setBaseUrl("../api/");
+
+  $httpProvider.interceptors.push(function($q, $rootScope, $location) {
+    return {
+      'responseError': function(response) {
+        console.log(response);
+        $rootScope.$broadcast('httpError', response);
+        return $q.reject(response);
+      }
+    };
+  });
+});
+
+app.run(function($rootScope, $location, Authentication) {
+  $rootScope.$on('httpError', function(event, response) {
+    if (response.status == 401) {
+      Authentication.clear();
+      $location.path('/login');
+    }
+  });
 });

@@ -32,11 +32,23 @@
     <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor" />
     
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
-        <!-- <property name="persistenceUnitName" value="user" /> --> 
-        <property name="jpaPropertyMap">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="packagesToScan">
+            <list>
+                <value>com.ozhou.fantuan.model</value>              
+            </list>
+        </property>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">            
+            </bean>
+        </property>
+        <property name="jpaProperties">
             <props>
+                <prop key="eclipselink.ddl-generation">create-or-extend-tables</prop>
+                <prop key="eclipselink.ddl-generation.output-mode">both</prop>
+                <prop key="eclipselink.logging.level">FINE</prop>
                 <prop key="eclipselink.weaving">false</prop>
+                <prop key="eclipselink.deploy-on-startup">true</prop>
             </props>
         </property>
     </bean>
@@ -46,4 +58,15 @@
     </bean>
     <tx:annotation-driven mode="aspectj" transaction-manager="transactionManager" />
     
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+            destroy-method="close">
+        <property name="driverClass" value="com.mysql.jdbc.Driver" />
+        <property name="minPoolSize" value="5" />
+        <property name="maxPoolSize" value="32" />
+        <property name="maxStatements" value="50" />
+        <property name="idleConnectionTestPeriod" value="3000" />
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/fantuan?characterEncoding=utf8" />
+        <property name="user" value="user" />
+        <property name="password" value="Password1" />
+    </bean>
 </beans>

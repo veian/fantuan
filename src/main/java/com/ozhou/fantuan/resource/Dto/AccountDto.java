@@ -6,6 +6,7 @@ public class AccountDto {
 	
 	private BigDecimal balance;
 	private String name;
+	private String password;
 	
 	public BigDecimal getBalance() {
 		return balance;
@@ -18,6 +19,12 @@ public class AccountDto {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 }
