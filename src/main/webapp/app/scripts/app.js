@@ -5,8 +5,8 @@ var app = angular.module('Fantuan',
   RestangularProvider.setBaseUrl("../api/");
   $httpProvider.interceptors.push(function($q, $rootScope, $location) {
     return {
-      'responseError': function(response) {
-        console.log(response);
+      responseError: function(response) {
+        //console.log(response);
         $rootScope.$broadcast('httpError', response);
         return $q.reject(response);
       }
@@ -50,6 +50,10 @@ app.run(function($rootScope, $location, Authentication) {
   $rootScope.$on('httpError', function(event, response) {
     if (response.status == 401) {
       Authentication.clear();
+      $rootScope.loginErrorMessage = "需要登录系统访问！";
+      $location.path('/login');
+    } else if (response.status == 403) {
+      $rootScope.loginErrorMessage = "没有足够的权限！请更换拥有更高权限的用户登录";
       $location.path('/login');
     }
   });
