@@ -9,6 +9,7 @@
         <intercept-url pattern="/api/accounts/*/entry/**" access="ROLE_USER" />
         <form-login authentication-success-handler-ref="mySuccessHandler" authentication-failure-handler-ref="myFailureHandler" />
         <logout />
+        <remember-me key="fantuan-key"/>
     </http>
 
     <bean:bean id="myFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler"/>

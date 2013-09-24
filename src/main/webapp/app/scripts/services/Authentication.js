@@ -26,7 +26,7 @@ function AuthenticationFactory($http, $q, $rootScope) {
 
   Authentication.prototype.login = function(username, password) {
     var self = this;
-    var form = $.param({ 'j_username': username, 'j_password': password });
+    var form = $.param({ 'j_username': username, 'j_password': password, '_spring_security_remember_me': true });
     var promise = $http({
       method: 'POST',
       url: "../j_spring_security_check",
