@@ -1,5 +1,20 @@
+sysPath = require 'path'
+
+# A simple helper that checks if string starts with substring.
+startsWith = (string, substring) ->
+  string.lastIndexOf(substring, 0) is 0
+
 exports.config =
-  # https://github.com/brunch/brunch/blob/master/docs/config.md for docs.    
+  # https://github.com/brunch/brunch/blob/master/docs/config.md for docs.
+  modules:
+    definition: false
+    wrapper: false
+
+  conventions:
+    assets: /^app\/assets\//
+    ignored: (path) ->
+      startsWith sysPath.basename(path), '_'
+      
   files:
     javascripts:
       joinTo:
@@ -22,9 +37,3 @@ exports.config =
     templates:
       joinTo: 'app.js'
 
-  modules:
-    definition: false
-    wrapper: false
-
-  conventions:
-    assets: /^app\/assets\//
