@@ -1,9 +1,10 @@
 var app = angular.module('Fantuan', 
-  ['ngRoute', '$strap.directives', 'ui.bootstrap', 'restangular', 'ngTable', 'nvd3ChartDirectives', 'ui.select2'], 
-  function(RestangularProvider, $httpProvider) {
+  ['ngRoute', '$strap.directives', 'ui.bootstrap', 'restangular', 'ngTable', 'nvd3ChartDirectives', 'ui.select2']);
+
+app.config(function(RestangularProvider, $httpProvider) {
 
   RestangularProvider.setBaseUrl("../api/");
-  $httpProvider.interceptors.push(function($q, $rootScope, $location) {
+  $httpProvider.interceptors.push(['$q', '$rootScope', '$location', function($q, $rootScope, $location) {
     return {
       responseError: function(response) {
         //console.log(response);
@@ -11,7 +12,7 @@ var app = angular.module('Fantuan',
         return $q.reject(response);
       }
     };
-  });
+  }]);
 });
 
 app.factory("CheckAuth", function(Authentication, $q) {

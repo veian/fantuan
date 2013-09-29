@@ -1,7 +1,7 @@
 /*global angular*/
 var module = angular.module("Fantuan");
 
-function AuthenticationFactory($http, $q, $rootScope) {
+module.factory("Authentication", function ($http, $q, $rootScope) {
 
   function Authentication() {
     this.auth = {};  
@@ -61,6 +61,4 @@ function AuthenticationFactory($http, $q, $rootScope) {
   };
 
   return new Authentication();
-}
-
-module.factory("Authentication", AuthenticationFactory);
+});
