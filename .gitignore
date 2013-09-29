@@ -6,3 +6,5 @@ src/main/webapp/.idea
 .classpath
 src/main/webapp/dist
 src/main/webapp/node_modules
+src/main/webapp/bower_components
+src/main/webapp/public

@@ -1,5 +1,5 @@
 var app = angular.module('Fantuan', 
-  ['$strap.directives', 'ui', 'ui.bootstrap', 'restangular', 'ngTable', 'nvd3ChartDirectives'], 
+  ['ngRoute', '$strap.directives', 'ui.bootstrap', 'restangular', 'ngTable', 'nvd3ChartDirectives', 'ui.select2'], 
   function(RestangularProvider, $httpProvider) {
 
   RestangularProvider.setBaseUrl("../api/");

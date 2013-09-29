@@ -6,15 +6,17 @@
 ###开发环境
 * Eclipse 3.7 J2EE
 * AspectJ Development Tools 2.2
+* Maven 3
+* NodeJS 0.10
+* Brunch 1.7
+* Bower 1.2
+* CoffeeScript 1.6
 
 ###使用的框架
 ####客户端
 * AngularJS
 * Bootstrap
 * JQuery
-* Angular-UI
-* select2
-* font-awesome
 
 ####服务器端
 * Spring Framework
