@@ -14,15 +14,15 @@
 
 ###使用的框架
 ####客户端
-* AngularJS
-* Bootstrap
-* JQuery
+* AngularJS 1.2
+* Bootstrap 2.3
+* jQuery 1.10
 
 ####服务器端
-* Spring Framework
-* JAX-RS - Resteasy
-* JPA - EclipseLink
-* Spring Security
+* Spring Framework 3
+* JAX-RS - Resteasy 3
+* JPA - EclipseLink 2.5
+* Spring Security 3
 * Orika - DTO/BO Mapping Library
 
 
