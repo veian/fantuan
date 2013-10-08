@@ -29,7 +29,6 @@ exports.config =
         'test/js/test-bower_components.js': /^test(\/|\\)(?=bower_components)/
       order:
         before: [
-          'vendor/pace/pace.coffee'
           'bower_components/lodash/lodash.js'
           'bower_components/jquery/jquery.js'
           'bower_components/angular/angular.js'

@@ -39,3 +39,11 @@
 .ng-table th{
     text-align:left;
 }
+
+#loading-bar-spinner {
+  display: block;
+  position: fixed;
+  z-index: 100;
+  top: 45px;
+  right: 10px;
+}
