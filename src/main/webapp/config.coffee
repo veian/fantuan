@@ -8,7 +8,12 @@ exports.config =
   # https://github.com/brunch/brunch/blob/master/docs/config.md for docs.
   modules:
     definition: false
-    wrapper: false
+    wrapper: (path, data) ->
+        """
+        (function() {
+          #{data}
+        }());\n\n
+        """
 
   conventions:
     assets: /^app\/assets\//
