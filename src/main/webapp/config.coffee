@@ -14,7 +14,7 @@ exports.config =
     assets: /^app\/assets\//
     ignored: (path) ->
       startsWith sysPath.basename(path), '_'
-      
+
   files:
     javascripts:
       joinTo:
@@ -24,15 +24,17 @@ exports.config =
         'test/js/test-bower_components.js': /^test(\/|\\)(?=bower_components)/
       order:
         before: [
-          'bower_components/jquery/jquery.js'
-          'bower_components/angular/angular.js',
-          'bower_components/nvd3/lib/d3.v3.js',
+          'vendor/pace/pace.coffee'
           'bower_components/lodash/lodash.js'
+          'bower_components/jquery/jquery.js'
+          'bower_components/angular/angular.js'
+          'bower_components/nvd3/lib/d3.v3.js'
         ]
 
     stylesheets:
       joinTo:
-        'css/app.css' : /^(app|bower_components|vendor)/
+        'css/app.css': /^(app)/
+        'css/vendor.css': /^(bower_components|vendor)/
 
     templates:
       joinTo: 'app.js'
