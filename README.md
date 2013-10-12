@@ -11,6 +11,7 @@
 * Brunch 1.7
 * Bower 1.2
 * CoffeeScript 1.6
+* Karma 0.10
 
 ###使用的框架
 ####客户端
