@@ -2,7 +2,7 @@ var shared = function(config) {
   config.set({
     basePath: './',
     frameworks: ['jasmine'],
-    reporters: ['progress'],
+    reporters: ['progress', 'growl'],
     browsers: ['Chrome'],
     autoWatch: true,
 

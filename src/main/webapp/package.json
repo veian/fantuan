@@ -6,7 +6,8 @@
   "repository": "",
   "scripts": {
     "start": "brunch watch --server",
-    "test": "brunch test"
+    "test": "brunch test",
+    "debug": "node --debug-brk ./node_modules/brunch/bin/brunch build"
   },
   "dependencies": {
     "javascript-brunch": "~1.7.0",
@@ -16,8 +17,11 @@
     "coffee-script-brunch": "~1.7.2"
   },
   "devDependencies": {
+    "brunch": "latest",
+    "coffee-script": "latest",
     "karma": "latest",
     "karma-chrome-launcher": "latest",
-    "karma-firefox-launcher": "latest"
+    "karma-firefox-launcher": "latest",
+    "growly": "~1.1.1"
   }
 }
