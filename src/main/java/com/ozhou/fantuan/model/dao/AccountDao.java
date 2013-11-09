@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Repository;
 
 import com.ozhou.fantuan.model.Account;
@@ -17,7 +16,6 @@ public class AccountDao {
     @PersistenceContext
     EntityManager entityManager;
 
-    @Transactional
     public void save(Account account) {
         entityManager.persist(account);
     }

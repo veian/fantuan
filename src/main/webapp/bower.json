@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "public/app.js",
   "dependencies": {
-     "angular-route": "~1.2.0-rc.2",
-     "angular-animate": "~1.2.0-rc.2",
+     "angular": "~1.2.0",
+     "angular-route": "~1.2.0",
+     "angular-animate": "~1.2.0",
      "angular-ui-bootstrap-bower": "~0.5.0",
      "bootstrap": "~2.3.2",
      "jquery": "~1.10.1",

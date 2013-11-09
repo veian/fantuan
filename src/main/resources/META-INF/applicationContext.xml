@@ -65,7 +65,7 @@
         <property name="maxPoolSize" value="32" />
         <property name="maxStatements" value="50" />
         <property name="idleConnectionTestPeriod" value="3000" />
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/fantuan2?characterEncoding=utf8" />
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/fantuan?characterEncoding=utf8" />
         <property name="user" value="user" />
         <property name="password" value="Password1" />
     </bean>

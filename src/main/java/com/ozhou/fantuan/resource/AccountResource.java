@@ -10,12 +10,15 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ozhou.fantuan.model.Account;
 import com.ozhou.fantuan.model.AccountEntry;
+import com.ozhou.fantuan.model.Role;
 import com.ozhou.fantuan.model.dao.AccountDao;
 import com.ozhou.fantuan.resource.dto.AccountDto;
 import com.ozhou.fantuan.resource.dto.AccountEntryDto;
@@ -29,14 +32,20 @@ public class AccountResource {
 	private AccountDao accountDao;
 	@Autowired
 	private DtoBoConverter converter;
+	@PersistenceContext
+	private EntityManager entityManger;
 
 	@POST
 	@Path("/")
 	@Produces({"application/json"})
 	@Transactional
-	public void putAccount(@NotNull AccountDto record) {
+	public void createNewAccount(@NotNull AccountDto record) {
 		Account account = converter.getMappingFacade().map(record, Account.class);
 		accountDao.save(account);
+		Role role = new Role();
+		role.setAccount(account);
+		role.setAuthority("ROLE_ADMIN");
+		entityManger.persist(role);
 	}
 	
 	@GET
