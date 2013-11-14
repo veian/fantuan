@@ -98,7 +98,9 @@ app.controller('MyCtrl', function($scope, Authentication, $location, Restangular
 
   getRecords($scope.tableParams);
 
-  $scope.users = Restangular.all("accounts").getList();
+  Restangular.all("accounts").getList().then(function(users) {
+    $scope.users = users;
+  });
 
   $scope.$watch("tableParams", function(param) {
     getRecords(param);

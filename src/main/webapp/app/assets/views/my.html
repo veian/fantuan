@@ -49,7 +49,7 @@
         </td>
         <td data-title="'饭友'">
             <span ng-repeat="participant in meal.participants">{{participant}}
-              <span ui-if="!$last">, 
+              <span ng-if="!$last">, 
               </span>
             </span>
         </td>
