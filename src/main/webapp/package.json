@@ -10,6 +10,13 @@
     "debug": "node --debug-brk ./node_modules/brunch/bin/brunch build"
   },
   "dependencies": {
+    "lodash": "~2.3.0",
+    "express": "~3.4.4",
+    "mongoose": "~3.8.0",
+    "async": "~0.2.9",
+    "json-mask": "~0.2.0",
+    "express-partial-response": "~0.2.1",
+    "express-namespace": "~0.1.1",
     "javascript-brunch": "~1.7.0",
     "css-brunch": "~1.7.0",
     "ngmin-uglify-js-brunch": "~1.7.2",

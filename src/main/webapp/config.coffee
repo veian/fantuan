@@ -43,3 +43,7 @@ exports.config =
     templates:
       joinTo: 'app.js'
 
+  server:
+    path: 'nodemon-wrapper.js'
+    
+
