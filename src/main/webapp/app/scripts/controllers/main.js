@@ -87,10 +87,12 @@ app.controller('MyCtrl', function($scope, Authentication, $location, Restangular
   getPageCount();
 
   var getRecords = function(param) {
-      $scope.meals = Restangular.all("meals").getList({
+      Restangular.all("meals").getList({
         user: Authentication.current(),
         start: (param.page - 1) * param.count,
         pageSize: param.count
+      }).then(function(meals) {
+        $scope.meals = meals;
       });
     };
 
@@ -118,9 +120,11 @@ app.controller('TopCtrl', function($scope, Restangular, ngTableParams) {
   getAccountCount();
 
   var getRecords = function(param) {
-      $scope.users = Restangular.one("accounts").customGETLIST("", {
+      Restangular.one("accounts").customGETLIST("", {
         start: (param.page - 1) * param.count,
         pageSize: param.count
+      }).then(function(users) {
+        $scope.users = users;
       });
     };
 
@@ -164,9 +168,11 @@ app.controller('AccountCtrl', function($scope, Restangular, Authentication, ngTa
   getPageCount();
 
   var getRecords = function(param) {
-      $scope.entries = Restangular.one("accounts", Authentication.current()).customGETLIST("entry", {
+      Restangular.one("accounts", Authentication.current()).customGETLIST("entry", {
         start: (param.page - 1) * param.count,
         pageSize: param.count
+      }).then(function(entries) {
+        $scope.entries = entries;
       });
     };
   getRecords($scope.tableParams);
