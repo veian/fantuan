@@ -17,15 +17,14 @@
     "json-mask": "~0.2.0",
     "express-partial-response": "~0.2.1",
     "express-namespace": "~0.1.1",
+    "q": "~0.9.7"
+  },
+  "devDependencies": {
     "javascript-brunch": "~1.7.0",
     "css-brunch": "~1.7.0",
     "ngmin-uglify-js-brunch": "~1.7.2",
     "clean-css-brunch": "~1.7.1",
-    "coffee-script-brunch": "~1.7.2"
-  },
-  "devDependencies": {
-    "brunch": "latest",
-    "coffee-script": "latest",
+    "coffee-script-brunch": "~1.7.2",
     "karma": "latest",
     "karma-chrome-launcher": "latest",
     "karma-firefox-launcher": "latest",
