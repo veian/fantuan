@@ -1,7 +1,7 @@
 <h1>我的帐户</h1>
 
 <table ng-table="tableParams" class="table ng-table-responsive">
-  <tr ng-repeat="entry in entries">
+  <tr ng-repeat="entry in $data">
     <td data-title="'类型'">{{entry.type}}</td>
     <td data-title="'金额'">{{entry.amount | number:2}}</td>
     <td data-title="'日期'">{{entry.date | date}}</td>

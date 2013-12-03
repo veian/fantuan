@@ -40,6 +40,17 @@ app.controller('MyCtrl', function($scope, Authentication, $location, Restangular
     page: 1,
     count: 5,
     counts: []
+  }, {
+    total: 0,
+    getData: function ($defer, params) {
+      Restangular.all("meals").getList({
+        user: Authentication.current(),
+        start: (params.page() - 1) * params.count(),
+        pageSize: params.count()
+      }).then(function(meals) {
+        $defer.resolve(meals);
+      });
+    }
   });
 
   //Fetch balance
@@ -62,11 +73,11 @@ app.controller('MyCtrl', function($scope, Authentication, $location, Restangular
     } else {
       $scope.submitting = true;
       Restangular.all("meals").post($scope.meal).then(function() {
-        getRecords($scope.tableParams);
         $scope.enterNewMeal = false;
         $scope.balance = getBalance();
 
         $scope.submitting = false;
+        $scope.tableParams.reload();
       }, function() {
         $scope.submitting = false;
       });
@@ -81,56 +92,38 @@ app.controller('MyCtrl', function($scope, Authentication, $location, Restangular
       Restangular.all("meals").customGET("count", {
         user: Authentication.current()
       }).then(function(data) {
-        $scope.tableParams.total = data.count;
+        $scope.tableParams.total(data.count);
       });
     };
   getPageCount();
 
-  var getRecords = function(param) {
-      Restangular.all("meals").getList({
-        user: Authentication.current(),
-        start: (param.page - 1) * param.count,
-        pageSize: param.count
-      }).then(function(meals) {
-        $scope.meals = meals;
-      });
-    };
-
-  getRecords($scope.tableParams);
-
   Restangular.all("accounts").getList().then(function(users) {
     $scope.users = users;
-  });
-
-  $scope.$watch("tableParams", function(param) {
-    getRecords(param);
   });
 });
 
 app.controller('TopCtrl', function($scope, Restangular, ngTableParams) {
   $scope.tableParams = new ngTableParams({
     page: 1,
-    count: 5,
-    counts: []
+    count: 5
+  }, {
+    total: 0,
+    getData: function ($defer, params) {
+      Restangular.one("accounts").customGETLIST("", {
+        start: (params.page() - 1) * params.count(),
+        pageSize: params.count()
+      }).then(function(users) {
+        $defer.resolve(users);
+      });
+    }
   });
 
   var getAccountCount = function() {
       Restangular.one("accounts").customGET("count").then(function(total) {
-        $scope.tableParams.total = total.count;
+        $scope.tableParams.total(total.count);
       });
     };
   getAccountCount();
-
-  var getRecords = function(param) {
-      Restangular.one("accounts").customGETLIST("", {
-        start: (param.page - 1) * param.count,
-        pageSize: param.count
-      }).then(function(users) {
-        $scope.users = users;
-      });
-    };
-
-  getRecords($scope.tableParams);
 
   var getChartData = function() {
       Restangular.one("accounts").customGETLIST("", {
@@ -160,26 +153,22 @@ app.controller('AccountCtrl', function($scope, Restangular, Authentication, ngTa
     page: 1,
     count: 5,
     counts: []
+  }, {
+    total: 0,
+    getData: function ($defer, params) {
+      Restangular.one("accounts", Authentication.current()).customGETLIST("entry", {
+        start: (params.page() - 1) * params.count(),
+        pageSize: params.count()
+      }).then(function(entries) {
+        $defer.resolve(entries);
+      });
+    }
   });
 
   var getPageCount = function() {
       Restangular.one("accounts", Authentication.current()).customGET("entry/count").then(function(total) {
-        $scope.tableParams.total = total.count;
+        $scope.tableParams.total(total.count);
       });
     };
   getPageCount();
-
-  var getRecords = function(param) {
-      Restangular.one("accounts", Authentication.current()).customGETLIST("entry", {
-        start: (param.page - 1) * param.count,
-        pageSize: param.count
-      }).then(function(entries) {
-        $scope.entries = entries;
-      });
-    };
-  getRecords($scope.tableParams);
-
-  $scope.$watch("tableParams", function(param) {
-    getRecords(param);
-  });
 });

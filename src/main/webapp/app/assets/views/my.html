@@ -37,7 +37,7 @@
 
 <p class="lead">余额： {{ balance | number:2 }}</p>
 <table ng-table="tableParams" class="table ng-table-responsive">
-    <tr ng-repeat="meal in meals">
+    <tr ng-repeat="meal in $data">
         <td data-title="'日期'">
             {{meal.date | date}}
         </td>

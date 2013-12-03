@@ -1,7 +1,7 @@
 <h1>排行榜</h1>
 
 <table ng-table="tableParams" class="table ng-table-responsive">
-  <tr ng-repeat="user in users">
+  <tr ng-repeat="user in $data">
     <td data-title="'用户名'">{{user.name}}</td>
     <td data-title="'余额'">{{user.balance  | number:2 }}</td>
   </tr>

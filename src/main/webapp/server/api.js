@@ -6,13 +6,14 @@ var Account = mongoose.model('Account');
 var AccountEntry = mongoose.model('AccountEntry');
 var MealRecord = mongoose.model('MealRecord');
 var services = require('./service.js');
+var Q = require('q');
 
 exports.addRoutes = function (app) {
 
   app.namespace('/api/accounts', function() {
 
     app.get('/', function (req, res) {
-      Account.find(function(err, accounts) {
+      Account.find().exec(function(err, accounts) {
         res.json(accounts);
       });
     });
@@ -31,7 +32,9 @@ exports.addRoutes = function (app) {
 
     app.get('/:user/entry', function (req, res) {
       Account.findOne({name: req.params.user}, function (err, user) {
-        res.json(user.entries);
+        var start = req.query.start || 0;
+        var pageSize = req.query.pageSize || 10;
+        res.json(user.entries.splice(start, pageSize));
       });
     });
 
@@ -78,7 +81,7 @@ exports.addRoutes = function (app) {
       if (!user) return res.send(404);
       var start = req.query.start || 0;
       var pageSize = req.query.pageSize || 10;
-      MealRecord.find().or([{payer: user}, {participants: user}]).skip(start).limit(pageSize).exec(function (err, meals) {
+      MealRecord.find().or([{payer: user}, {participants: user}]).sort('-date').skip(start).limit(pageSize).exec(function (err, meals) {
         res.json(meals);
       });
     });
@@ -92,12 +95,12 @@ exports.addRoutes = function (app) {
 
     app.post('/', function (req, res) {
       var record = req.body;
-      console.log(record);
       record = new MealRecord(record);
-      record.save(function (err, record) {
-        services.splitMealRecord(record, function (err) {
-          return err ? res.send(500) : res.send(200); 
-        });  
+      Q.ninvoke(record, 'save').then(function (result) {
+        return services.splitMealRecord(result[0]);
+      })
+      .done(function () {
+        res.send(200);
       });
     });
 
