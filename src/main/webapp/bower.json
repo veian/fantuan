@@ -3,19 +3,10 @@
   "version": "1.0.0",
   "main": "public/app.js",
   "dependencies": {
-     "angular": "~1.2.1",
-     "angular-route": "~1.2.0",
-     "angular-animate": "~1.2.0",
-     "angular-ui-bootstrap-bower": "~0.5.0",
-     "bootstrap": "~2.3.2",
-     "jquery": "~1.10.1",
-     "angular-strap": "~0.7.6",
-     "font-awesome": "latest",
-     "nvd3": "1.1.12-beta",
-     "select2": "~3.4.3",
-     "restangular": "1.1.3",
-     "angular-ui-select2": "0.0.2",
-     "angular-loading-bar": "0.0.4"
+     "angular": "1.2.6",
+    "angular-route": "1.2.6",
+    "angular-animate": "1.2.6",
+    "angular-sanitize": "1.2.6"
     },
   "overrides": {}
 }

@@ -1,6 +1,6 @@
 var app = angular.module('Fantuan', 
-  ['ngRoute', 'chieffancypants.loadingBar', '$strap.directives', 
-   'ui.bootstrap', 'restangular', 'ngTable', 'nvd3ChartDirectives', 'ui.select2']);
+  ['ngRoute', 'chieffancypants.loadingBar', 
+   'ui.bootstrap', 'restangular', 'ngTable', 'nvd3ChartDirectives', 'localytics.directives']);
 
 app.config(function(RestangularProvider, $httpProvider) {
 

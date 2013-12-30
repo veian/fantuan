@@ -25,6 +25,7 @@
     "ngmin-uglify-js-brunch": "~1.7.2",
     "clean-css-brunch": "~1.7.1",
     "coffee-script-brunch": "~1.7.2",
+    "auto-reload-brunch": "~1.7.1",
     "karma": "latest",
     "karma-chrome-launcher": "latest",
     "karma-firefox-launcher": "latest",

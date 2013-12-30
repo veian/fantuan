@@ -12,7 +12,7 @@ var app = module.exports = express();
 /**
  * Configuration
  */
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3001);
 app.use(express.logger('dev'));
 app.use(express.cookieParser());
 app.use(express.cookieSession({secret: 'some secret'}));

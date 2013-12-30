@@ -1,39 +1,43 @@
 <h1>我的饭局</h1>
-
 <button class="btn btn-primary" ng-click="newMeal()" ng-show="!enterNewMeal">创建新饭局</button>
-<form name="myForm" ng-show="enterNewMeal" ng-submit="newMeal()">
-  <fieldset ng-disabled="submitting">
-    <div class="control-group input-append">
-      <label>日期</label>
-      <input type="text" ng-model="meal.date" data-date-format="dd/mm/yyyy" bs-datepicker required>
-      <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
-    </div>
-    <div class="control-group">
-      <label>费用</label>
-      <input type="text" ng-model="meal.amount" integer required>
-    </div>
-    <div class="control-group">
-      <label>买单</label>
-      <select ui-select2 ng-model="meal.payer" style="width:300px" required>
-        <option value=""></option>
-        <option ng-repeat="user in users" value="{{user.name}}">{{user.name}}</option>
-      </select>
-    </div>
-    <div class="control-group">
-      <label>参与人员</label>
-      <select ui-select2 multiple ng-model="meal.participants" style="width:300px" required>
-        <option ng-repeat="user in users" value="{{user.name}}">{{user.name}}</option>
-      </select>
-    </div>
-    <div class="control-group">
-      <label>餐馆</label>
-      <input type="text" ui-select2="restaurantOptions" ng-model="restaurantOption" style="width:300px" required />
-    </div>
+<div class="row">
+  <div class="col-md-6">
+  <form role="form" name="myForm" ng-show="enterNewMeal" ng-submit="newMeal()">
+    <fieldset ng-disabled="submitting">
+      <div class="form-group">
+        <label>日期</label>
+        <div class="input-group">
+          <span class="input-group-btn">
+            <input class="form-control" type="text" ng-model="meal.date" datepicker-popup="yyyy/MM/dd" required>
+            <button type="button" class="btn btn-default" data-toggle="datepicker"><i class="fa fa-calendar"></i></button>
+          </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>费用</label>
+        <input class="form-control" type="text" ng-model="meal.amount" integer required>
+      </div>
+      <div class="form-group">
+        <label>买单</label>
+        <select class="form-control" chosen ng-model="meal.payer" width="10" ng-options="user.name as user.name for user in users" required>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>参与人员</label>
+        <select class="form-control" chosen multiple ng-model="meal.participants" width="10" ng-options="user.name as user.name for user in users" required>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>餐馆</label>
+        <input class="form-control" type="text" ng-model="restaurantOption" required typeahead="res for res in restaurants">
+      </div>
 
-    <button class="btn btn-primary" ng-disabled="myForm.$invalid" type="submit">创建</button>
-    <button class="btn" ng-click="cancelMeal()" ng-show="enterNewMeal">取消</button>
-  </fieldset>
-</form>
+      <button class="btn btn-primary" ng-disabled="myForm.$invalid" type="submit">创建</button>
+      <button class="btn btn-warning" ng-click="cancelMeal()" ng-show="enterNewMeal">取消</button>
+    </fieldset>
+  </form>
+  </div>
+</div>
 
 <p class="lead">余额： {{ balance | number:2 }}</p>
 <table ng-table="tableParams" class="table ng-table-responsive">

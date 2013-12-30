@@ -4,31 +4,7 @@
 var app = angular.module('Fantuan');
 
 app.controller('MyCtrl', function($scope, Authentication, $location, Restangular, ngTableParams) {
-  $scope.restaurantOptions = {
-    data: [{
-      "id": 0,
-      "text": "斗香园"
-    }, {
-      "id": 1,
-      "text": "友加"
-    }, {
-      "id": 2,
-      "text": "日本料理"
-    }, {
-      "id": 3,
-      "text": "新旺"
-    }],
-    multiple: false,
-    createSearchChoice: function(term) {
-      var timestamp = new Date().getTime();
-      return {
-        id: timestamp,
-        text: term,
-        new: true
-      };
-    }
-  };
-
+  $scope.restaurants = ["斗香园", "友加", "日本料理", "新旺"];
   $scope.restaurantOption = "";
   $scope.submitting = false;
   $scope.meal = {
@@ -63,7 +39,7 @@ app.controller('MyCtrl', function($scope, Authentication, $location, Restangular
 
   $scope.$watch("restaurantOption", function(newValue, oldValue) {
     if (newValue) {
-      $scope.meal.restaurant = newValue.text;
+      $scope.meal.restaurant = newValue;
     }
   });
   //Create new meal
